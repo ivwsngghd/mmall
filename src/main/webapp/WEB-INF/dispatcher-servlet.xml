@@ -30,6 +30,7 @@
                 <!--</property>-->
                 <property name="supportedMediaTypes">
                     <list>
+                        <!--ResponseBody的配置，序列化成JSON-->
                         <value>application/json;charset=UTF-8</value>
                     </list>
                 </property>

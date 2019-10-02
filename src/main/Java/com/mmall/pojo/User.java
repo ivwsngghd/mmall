@@ -13,11 +13,11 @@ public class User {
 
     private String phone;
 
-    private String question;
+    private String question;    //找回密码的问题
 
-    private String answer;
+    private String answer;      //找回密码的答案
 
-    private Integer role;
+    private Integer role;       //角色：0-管理员，1-普通用户
 
     private Date createTime;
 
