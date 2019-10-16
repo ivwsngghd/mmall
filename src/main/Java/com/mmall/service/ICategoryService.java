@@ -22,6 +22,9 @@ public interface ICategoryService {
      * @param categoryId
      * @return
      */
-    public ServerResponse selectCategoryAndChildrenById(Integer categoryId);
+    public ServerResponse<List<Integer>> selectCategoryAndChildrenById(Integer categoryId);
+
+
+
 
 }

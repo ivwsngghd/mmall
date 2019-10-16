@@ -64,8 +64,8 @@ public class FTPUtil {
         if (connectServer(this.ip,this.port,this.user,this.pwd)){
             try {
                 System.out.println("开始上传文件");
-                ftpClient.changeWorkingDirectory(remotePath);
-                ftpClient.setBufferSize(1024);
+                ftpClient.changeWorkingDirectory(remotePath);   //创建ftp服务器的路径
+                ftpClient.setBufferSize(1024);                  //
                 ftpClient.setControlEncoding("UTF-8");
                 ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
 //                ftpClient.enterLocalActiveMode();
@@ -83,7 +83,6 @@ public class FTPUtil {
                 ftpClient.disconnect();
             }
         }
-
         return uploaded;
     }
 

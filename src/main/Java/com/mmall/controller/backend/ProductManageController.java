@@ -123,6 +123,13 @@ public class ProductManageController {
         }
     }
 
+    /**
+     * 上传文件
+     * @param session
+     * @param file  注意value = upload_file 要和前台的 name 属性一致，否则无法上传；
+     * @param request
+     * @return
+     */
     @RequestMapping("upload.do")
     @ResponseBody
     public ServerResponse upload(HttpSession session, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {

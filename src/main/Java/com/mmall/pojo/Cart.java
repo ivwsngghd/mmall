@@ -2,6 +2,10 @@ package com.mmall.pojo;
 
 import java.util.Date;
 
+/**
+ * Cart 一个抽象结构，存放用户ID和商品ID的关联关系；以及这个商品的数量，是否被勾选；
+ * 一个用于关联商品和用户的购物车商品存储抽象结构
+ */
 public class Cart {
     private Integer id;
 
