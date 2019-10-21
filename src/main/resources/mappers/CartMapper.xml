@@ -137,7 +137,7 @@
   </select>
 
   <delete id="deleteByUserIdProductIds" parameterType="map" >
-    delete from mmall_product
+    delete from mmall_cart
     where user_id = #{userId}
     <if test="productIdList != null">
       and product_id in
@@ -149,12 +149,12 @@
 
   <update id="checkedOrUncheckedProduct" parameterType="map">
     update mmall_cart
-    set checked = #{checked}
+    set checked = #{checked},
     update_time = now()
-  <if test="productId != null">
+    where user_id = #{userId}
+    <if test="productId != null">
     and product_id = #{productId}
-
-  </if>
+    </if>
   </update>
 
   <select id="selectCartProductCount" resultType="int">

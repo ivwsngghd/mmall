@@ -19,7 +19,6 @@
   </properties>
 
   <dependencies>
-
     <dependency>
       <groupId>org.apache.tomcat</groupId>
       <artifactId>tomcat-servlet-api</artifactId>
@@ -277,6 +276,8 @@
       </plugin>
 
       <!-- geelynote maven的核心插件之-complier插件默认只支持编译Java 1.4，因此需要加上支持高版本jre的配置，在pom.xml里面加上 增加编译插件 -->
+      <!--发布的时候，把lib文件也一起上传到服务器里(该路径和maven的路径是一致的)-->
+      <!--没这个插件发布后会class not found-->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -290,8 +291,5 @@
         </configuration>
       </plugin>
     </plugins>
-
   </build>
-
-
 </project>
