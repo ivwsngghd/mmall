@@ -35,7 +35,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath:WEB-INF/lib/applicationContext.xml
+            classpath:./applicationContext.xml
         </param-value>  <!-- 整合xml文件 -->
     </context-param>
 
