@@ -68,8 +68,8 @@ public class FTPUtil {
                 ftpClient.setBufferSize(1024);                  //
                 ftpClient.setControlEncoding("UTF-8");
                 ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
-//                ftpClient.enterLocalActiveMode();
-                ftpClient.enterLocalPassiveMode();
+//                ftpClient.enterLocalActiveMode(); //外部链接
+                ftpClient.enterLocalPassiveMode();  //内部链接  大多数允许
                 for (File fileItem : fileList){
                     fis = new FileInputStream(fileItem);
                     ftpClient.storeFile(fileItem.getName(),fis);
