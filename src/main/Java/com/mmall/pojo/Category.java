@@ -2,12 +2,6 @@ package com.mmall.pojo;
 
 import java.util.Date;
 
-/**
- * 商品的分类
- * 与上级分类关联
- * 父类ID是0代表该分类是根节点分类
- * status 1正常，2废弃
- */
 public class Category {
     private Integer id;
     private Integer parentId;
