@@ -31,12 +31,6 @@
     delete from mmall_shipping
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByPrimaryKeyUserId" parameterType="map">
-    delete from mmall_shipping
-    where id = #{shippingId}
-    and user_id = #{userId}
-  </delete>
-
   <insert id="insert" parameterType="com.mmall.pojo.Shipping" useGeneratedKeys="true" keyProperty="id">
     insert into mmall_shipping (id, user_id, receiver_name, 
       receiver_phone, receiver_mobile, receiver_province, 
@@ -183,55 +177,63 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <update id="updateByPrimaryKeyUserId" parameterType="com.mmall.pojo.Shipping">
+  <delete id="deleteByShippingIdUserId" parameterType="map">
+    DELETE  FROM  mmall_shipping
+    where id = #{shippingId}
+    and user_id = #{userId}
+  </delete>
+
+  <update id="updateByShipping" parameterType="com.mmall.pojo.Shipping">
     update mmall_shipping
-    <set >
-      <if test="receiverName != null" >
-        receiver_name = #{receiverName,jdbcType=VARCHAR},
-      </if>
-      <if test="receiverPhone != null" >
-        receiver_phone = #{receiverPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="receiverMobile != null" >
-        receiver_mobile = #{receiverMobile,jdbcType=VARCHAR},
-      </if>
-      <if test="receiverProvince != null" >
-        receiver_province = #{receiverProvince,jdbcType=VARCHAR},
-      </if>
-      <if test="receiverCity != null" >
-        receiver_city = #{receiverCity,jdbcType=VARCHAR},
-      </if>
-      <if test="receiverDistrict != null" >
-        receiver_district = #{receiverDistrict,jdbcType=VARCHAR},
-      </if>
-      <if test="receiverAddress != null" >
-        receiver_address = #{receiverAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="receiverZip != null" >
-        receiver_zip = #{receiverZip,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-        update_time = now()
-    </set>
+    set
+      receiver_name = #{receiverName,jdbcType=VARCHAR},
+      receiver_phone = #{receiverPhone,jdbcType=VARCHAR},
+      receiver_mobile = #{receiverMobile,jdbcType=VARCHAR},
+      receiver_province = #{receiverProvince,jdbcType=VARCHAR},
+      receiver_city = #{receiverCity,jdbcType=VARCHAR},
+      receiver_district = #{receiverDistrict,jdbcType=VARCHAR},
+      receiver_address = #{receiverAddress,jdbcType=VARCHAR},
+      receiver_zip = #{receiverZip,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = now()
     where id = #{id,jdbcType=INTEGER}
     and user_id = #{userId,jdbcType=INTEGER}
   </update>
 
-  <select id="selectByPrimaryKeyUserId" parameterType="map" resultMap="BaseResultMap">
-    select
+
+  <select id="selectByShippingIdUserId" resultMap="BaseResultMap" parameterType="map">
+    SELECT
     <include refid="Base_Column_List"/>
     from mmall_shipping
-    where id = #{id}
+    where id = #{shippingId}
     and user_id = #{userId}
   </select>
 
-  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="integer" >
-    select
+
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="map">
+    SELECT
     <include refid="Base_Column_List"/>
     from mmall_shipping
     where user_id = #{userId}
   </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </mapper>

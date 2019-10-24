@@ -8,7 +8,6 @@
 	http://www.springframework.org/schema/mvc
 	http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <!--针对Controller层-->
     <context:component-scan base-package="com.mmall" annotation-config="true"/>
 
     <mvc:annotation-driven>
@@ -21,16 +20,9 @@
                     </list>
                 </property>
             </bean>
-            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-                <!--<property name="objectMapper">-->
-                    <!--用于自动反序列化的配置-->
-                    <!--<bean class="org.codehaus.jackson.map.ObjectMapper">-->
-                        <!--<property name="serializationInclusion" value="NON_EMPTY"/>-->
-                    <!--</bean>-->
-                <!--</property>-->
+            <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>
-                        <!--ResponseBody的配置，序列化成JSON-->
                         <value>application/json;charset=UTF-8</value>
                     </list>
                 </property>
@@ -42,9 +34,9 @@
 
     <!-- 文件上传 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="10485760"/> <!-- 10m 单位byte-->
-        <property name="maxInMemorySize" value="4096" />   <!-- 给上传的文件分配的最大内存的块 -->
-        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="maxUploadSize" value="10485760"/> <!-- 10m -->
+        <property name="maxInMemorySize" value="4096" />
+        <property name="defaultEncoding" value="UTF-8"></property>
     </bean>
 
 

@@ -4,11 +4,13 @@ package com.mmall.service;
 import com.google.common.base.Splitter;
 import com.mmall.BaseTest;
 import com.mmall.dao.CartMapper;
+import com.mmall.pojo.Cart;
 import com.mmall.vo.CartProductVo;
 import com.mmall.vo.CartVo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class ServiceTestCart extends BaseTest {
@@ -31,6 +33,16 @@ public class ServiceTestCart extends BaseTest {
             System.out.println(cartProductVo.getProductId());
             System.out.println(cartProductVo.getProductName());
             System.out.println(cartProductVo.getQuantity());
+        }
+
+    }
+
+    @Test
+    public void cartProductTest(){
+        List<Cart> cartList= cartMapper.selectCartByUserId(1);
+        Iterator<Cart> cartIterator = cartList.iterator();
+        while (cartIterator.hasNext()){
+            System.out.println(cartIterator.next().getQuantity());
         }
 
     }

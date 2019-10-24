@@ -43,7 +43,7 @@
       #{shippingId,jdbcType=INTEGER}, #{payment,jdbcType=DECIMAL}, #{paymentType,jdbcType=INTEGER}, 
       #{postage,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{paymentTime,jdbcType=TIMESTAMP}, 
       #{sendTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{closeTime,jdbcType=TIMESTAMP}, 
-      now(),now())
+      now(), now())
   </insert>
   <insert id="insertSelective" parameterType="com.mmall.pojo.Order" >
     insert into mmall_order
@@ -128,11 +128,11 @@
       <if test="closeTime != null" >
         #{closeTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime == null" >
+      <if test="createTime != null" >
         now(),
       </if>
       <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+        now(),
       </if>
     </trim>
   </insert>
@@ -199,26 +199,29 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectByUserIdAndOrderNo" parameterType="map" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
+
+  <select id="selectByUserIdAndOrderNo" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"></include>
     from mmall_order
     where order_no = #{orderNo}
     and user_id = #{userId}
   </select>
 
-  <select id="selectByOrderNo" parameterType="long" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from mmall_order
+
+  <select id="selectByOrderNo" resultMap="BaseResultMap" parameterType="long">
+    SELECT
+    <include refid="Base_Column_List">
+    </include>
+    FROM  mmall_order
     where order_no = #{orderNo}
-
-
   </select>
+
+
 
   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="int">
     SELECT
-    <include refid="Base_Column_List"/>
+      <include refid="Base_Column_List"/>
     from mmall_order
     where user_id = #{userId}
     order by create_time desc
@@ -232,5 +235,18 @@
     from mmall_order
     ORDER BY  create_time desc
   </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </mapper>
