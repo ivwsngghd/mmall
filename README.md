@@ -1,6 +1,13 @@
-10/25 
 
 
+
+10/24 小总结：
+- maven
+- vsftpd
+- nginx
+- git
+- mysql
+- 环境变量
 
 
 10/24 线上发布的过程出现了bug
