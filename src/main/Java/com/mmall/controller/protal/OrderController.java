@@ -165,6 +165,7 @@ public class OrderController {
 
 
         //todo 验证各种数据
+        //譬如验证数据是否为空，因为一般该接口只开放给阿里用作回调
         //各种验证通过，利用支付宝发送的回调信息调用service层修改支付状态信息
         ServerResponse serverResponse = iOrderService.aliCallback(params);
         if (serverResponse.isSuccess()){
