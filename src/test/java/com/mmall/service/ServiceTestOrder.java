@@ -4,16 +4,21 @@ package com.mmall.service;
 import com.google.common.base.Splitter;
 import com.mmall.BaseTest;
 import com.mmall.common.Const;
+import com.mmall.common.ServerResponse;
 import com.mmall.dao.CartMapper;
 import com.mmall.dao.OrderMapper;
 import com.mmall.pojo.Order;
+import com.mmall.pojo.OrderItem;
 import com.mmall.util.DateTimeUtil;
 import com.mmall.vo.CartProductVo;
 import com.mmall.vo.CartVo;
+import com.mmall.vo.OrderItemVo;
+import com.mmall.vo.OrderVo;
 import org.junit.Test;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -45,5 +50,27 @@ public class ServiceTestOrder extends BaseTest {
         }
     }
 
+    @Test
+    public void manageDetailTest() {
+        ServerResponse<OrderVo> serverResponse = iOrderService.manageDetail(1492091076073L);
+        if (!serverResponse.isSuccess()) return;
+
+        OrderVo orderVo = serverResponse.getData();
+        System.out.println("订单编号" + orderVo.getOrderNo());
+        System.out.println("订单金额" + orderVo.getPayment());
+        System.out.println("收货人" + orderVo.getReceiverName());
+
+        List<OrderItemVo> orderVoList = orderVo.getOrderItemVoList();
+        Iterator<OrderItemVo> itemVoIterator = orderVoList.iterator();
+
+        while (itemVoIterator.hasNext()){
+            OrderItemVo orderItemVo = itemVoIterator.next();
+            System.out.println(orderItemVo.getProductId());
+            System.out.println(orderItemVo.getProductName());
+            System.out.println(orderItemVo.getQuantity());
+            System.out.println(orderItemVo.getTotalPrice());
+        }
+
+    }
 
 }

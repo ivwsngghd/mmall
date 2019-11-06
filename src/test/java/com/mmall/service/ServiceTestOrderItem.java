@@ -2,10 +2,12 @@ package com.mmall.service;
 
 
 import com.mmall.BaseTest;
+import com.mmall.common.ServerResponse;
 import com.mmall.dao.OrderItemMapper;
 import com.mmall.dao.OrderMapper;
 import com.mmall.pojo.Order;
 import com.mmall.pojo.OrderItem;
+import com.mmall.vo.OrderVo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,8 +26,9 @@ public class ServiceTestOrderItem extends BaseTest {
             System.out.println(orderItem.getCurrentUnitPrice());
             System.out.println();
         }
-
     }
+
+
 
 
 }
