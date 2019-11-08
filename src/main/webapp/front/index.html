@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-comatible" content="ie=edge">
+    <meta name="keywords" content="Java企业级电商平台">
+    <meta name="description" content="维博网络电商平台开发教案">
+    <link rel="shortcut icon" href="http://shopdemo.wephp.com/favicon.ico">
+    <title>首页-电商平台</title>
+    <link href="mmall_index_files/common.css" rel="stylesheet">
+    <link href="mmall_index_files/index.css" rel="stylesheet">
+</head>
+<body>
+<div class="nav">
+    <div class="w">
+        <div class="user-info"><span class="user not-login"> <span class="link js-login">登录</span> <span
+                class="link js-register">注册</span> </span> <span class="user login"> <span class="link-text"> 欢迎， <span
+                class="username"></span> </span> <span class="link js-logout">退出</span> </span></div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="link" href="http://shopdemo.wephp.com/cart.html"> <i
+                    class="fa fa-shopping-cart"></i> 购物车(<span class="cart-count">0</span>) </a></li>
+            <li class="nav-item"><a class="link" href="http://shopdemo.wephp.com/order-list.html">我的订单</a></li>
+            <li class="nav-item"><a class="link" href="http://shopdemo.wephp.com/user-center.html">我的WESHOP</a></li>
+            <li class="nav-item"><a class="link" href="http://shopdemo.wephp.com/about.html">关于WESHOP</a></li>
+        </ul>
+    </div>
+</div>
+<div class="header">
+    <div class="w"><a class="logo" href="http://www.ivwsngghd.top/index.html">WESHOP</a>
+        <div class="search-con"><input class="search-input" id="search-input" placeholder="请输入商品名称"> <a
+                class="btn search-btn" id="search-btn">搜索</a></div>
+    </div>
+</div>
+<div class="w">
+    <ul class="keywords-list">
+        <li class="keywords-item">
+            <a class="link" target="_blank" href="http://shopdemo.wephp.com/list.html?keyword=%E6%89%8B%E6%9C%BA">手机</a>
+            <a class="link" target="_blank" href="http://shopdemo.wephp.com/list.html?keyword=%E6%95%B0%E7%A0%81">数码</a>
+        </li>
+        <li class="keywords-item">
+            <a class="link" target="_blank" href="http://shopdemo.wephp.com/list.html?keyword=%E7%94%B5%E8%84%91">电脑</a>
+            <a class="link" target="_blank"
+               href="http://shopdemo.wephp.com/list.html?keyword=%E5%8A%9E%E5%85%AC%E9%85%8D%E4%BB%B6">办公配件</a>
+        </li>
+        <li class="keywords-item">
+            <a class="link" target="_blank" href="http://shopdemo.wephp.com/list.html?keyword=%E7%94%B5%E8%A7%86">电视</a>
+            <a class="link" target="_blank" href="http://shopdemo.wephp.com/list.html?keyword=%E7%A9%BA%E8%B0%83">空调</a>
+            <a class="link" target="_blank" href="http://shopdemo.wephp.com/list.html?keyword=%E5%86%B0%E7%AE%B1">冰箱</a>
+            <a class="link" target="_blank"
+               href="http://shopdemo.wephp.com/list.html?keyword=%E6%B4%97%E8%A1%A3%E6%9C%BA">洗衣机</a>
+        </li>
+        <li class="keywords-item">
+            <a class="link" target="_blank"
+               href="http://shopdemo.wephp.com/list.html?keyword=%E5%8E%A8%E5%8D%AB%E5%AE%B6%E7%94%B5">厨卫家电</a>
+            <a class="link" target="_blank"
+               href="http://shopdemo.wephp.com/list.html?keyword=%E5%B0%8F%E5%AE%B6%E7%94%B5">小家电</a>
+        </li>
+        <li class="keywords-item">
+            <a class="link" target="_blank" href="http://shopdemo.wephp.com/list.html?keyword=%E5%AE%B6%E5%85%B7">家具</a>
+            <a class="link" target="_blank" href="http://shopdemo.wephp.com/list.html?keyword=%E5%AE%B6%E5%85%B7">家具</a>
+            <a class="link" target="_blank" href="http://shopdemo.wephp.com/list.html?keyword=%E5%AE%B6%E8%A3%85">家装</a>
+        </li>
+        <li class="keywords-item">
+            <a class="link" target="_blank"
+               href="http://shopdemo.wephp.com/list.html?keyword=%E5%8E%A8%E5%8D%AB%E5%AE%B6%E7%94%B5">厨卫家电</a>
+            <a class="link" target="_blank"
+               href="http://shopdemo.wephp.com/list.html?keyword=%E5%B0%8F%E5%AE%B6%E7%94%B5">小家电</a>
+        </li>
+        <li class="keywords-item">
+            <a class="link" target="_blank"
+               href="http://shopdemo.wephp.com/list.html?keyword=%E4%B8%AA%E6%8A%A4%E5%8C%96%E5%A6%86">个护化妆</a>
+            <a class="link" target="_blank"
+               href="http://shopdemo.wephp.com/list.html?keyword=%E6%B8%85%E6%B4%81%E7%94%A8%E5%93%81">清洁用品</a>
+            <a class="link" target="_blank" href="http://shopdemo.wephp.com/list.html?keyword=%E7%BA%B8%E5%93%81">纸品</a>
+        </li>
+        <li class="keywords-item">
+            <a class="link" target="_blank"
+               href="http://shopdemo.wephp.com/list.html?keyword=%E6%AF%8D%E5%A9%B4%E7%94%A8%E5%93%81">母婴用品</a>
+            <a class="link" target="_blank"
+               href="http://shopdemo.wephp.com/list.html?keyword=%E5%84%BF%E7%AB%A5%E7%8E%A9%E5%85%B7">儿童玩具</a>
+            <a class="link" target="_blank"
+               href="http://shopdemo.wephp.com/list.html?keyword=%E7%AB%A5%E8%A3%85%E7%AB%A5%E9%9E%8B">童装童鞋</a>
+        </li>
+        <li class="keywords-item">
+            <a class="link" target="_blank" href="http://shopdemo.wephp.com/list.html?keyword=%E9%9E%8B%E9%9D%B4">鞋靴</a>
+            <a class="link" target="_blank" href="http://shopdemo.wephp.com/list.html?keyword=%E7%AE%B1%E5%8C%85">箱包</a>
+            <a class="link" target="_blank" href="http://shopdemo.wephp.com/list.html?keyword=%E9%92%9F%E8%A1%A8">钟表</a>
+            <a class="link" target="_blank" href="http://shopdemo.wephp.com/list.html?keyword=%E7%8F%A0%E5%AE%9D">珠宝</a>
+        </li>
+        <li class="keywords-item">
+            <a class="link" target="_blank" href="http://shopdemo.wephp.com/list.html?keyword=%E5%9B%BE%E4%B9%A6">图书</a>
+            <a class="link" target="_blank" href="http://shopdemo.wephp.com/list.html?keyword=%E9%9F%B3%E5%83%8F">音像</a>
+            <a class="link" target="_blank"
+               href="http://shopdemo.wephp.com/list.html?keyword=%E7%94%B5%E5%AD%90%E4%B9%A6">电子书</a>
+        </li>
+    </ul>
+    <div class="banner-con">
+        <div class="banner has-dots" style="overflow: hidden; width: 830px; height: 370px;">
+            <ul style="width: 500%; position: relative; left: -203.628%; height: 370px; overflow: hidden;">
+                <li style="width: 20%;">
+                    <a href="http://shopdemo.wephp.com/list.html?categoryId=100021" target="_blank">
+                        <img class="banner-img" src="mmall_index_files/banner1.jfif">
+                    </a>
+                </li>
+                <li style="width: 20%;">
+                    <a href="http://shopdemo.wephp.com/list.html?categoryId=100030" target="_blank">
+                        <img class="banner-img" src="mmall_index_files/banner2.jfif">
+                    </a>
+                </li>
+                <li style="width: 20%;">
+                    <a href="http://shopdemo.wephp.com/list.html?categoryId=100016" target="_blank">
+                        <img class="banner-img" src="mmall_index_files/banner3.jfif">
+                    </a>
+                </li>
+                <li style="width: 20%;">
+                    <a href="http://shopdemo.wephp.com/list.html?categoryId=100001" target="_blank">
+                        <img class="banner-img" src="mmall_index_files/banner4.jfif">
+                    </a>
+                </li>
+                <li style="width: 20%;">
+                    <a href="http://shopdemo.wephp.com/list.html?categoryId=100021" target="_blank">
+                        <img class="banner-img" src="mmall_index_files/banner5.jfif">
+                    </a>
+                </li>
+            </ul>
+            <div class="banner-arrow prev">
+                <i class="fa fa-angle-left"></i>
+            </div>
+            <div class="banner-arrow next">
+                <i class="fa fa-angle-right"></i>
+            </div>
+            <ol class="dots">
+                <li class="dot">1</li>
+                <li class="dot">2</li>
+                <li class="dot">3</li>
+                <li class="dot active">4</li>
+                <li class="dot">5</li>
+            </ol>
+        </div>
+
+    </div>
+</div>
+<div class="w">
+    <div class="floor-wrap">
+        <h1 class="floor-title">F1 家用电器</h1>
+        <ul class="floor-list">
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=35">
+                    <span class="floor-text">双开门冰箱</span>
+                    <img class="floor-img" src="mmall_index_files/floor1-1.jfif" alt="双开门冰箱">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=34">
+                    <span class="floor-text">电视</span>
+                    <img class="floor-img" src="mmall_index_files/floor1-2.jfif" alt="电视">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=9">
+                    <span class="floor-text">洗衣机</span>
+                    <img class="floor-img" src="mmall_index_files/floor1-3.jfif" alt="洗衣机">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=10">
+                    <span class="floor-text">空调</span>
+                    <img class="floor-img" src="mmall_index_files/floor1-4.jfif" alt="空调">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=11">
+                    <span class="floor-text">热水器</span>
+                    <img class="floor-img" src="mmall_index_files/floor1-5.jfif" alt="热水器">
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="floor-wrap">
+        <h1 class="floor-title">F2 数码3C</h1>
+        <ul class="floor-list">
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100011">
+                    <span class="floor-text">笔记本电脑</span>
+                    <img class="floor-img" src="mmall_index_files/floor2-1.jfif" alt="笔记本电脑">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100012">
+                    <span class="floor-text">手机</span>
+                    <img class="floor-img" src="mmall_index_files/floor2-2.jfif" alt="手机">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100013">
+                    <span class="floor-text">平板电脑</span>
+                    <img class="floor-img" src="mmall_index_files/floor2-3.jfif" alt="平板电脑">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100014">
+                    <span class="floor-text">数码相机</span>
+                    <img class="floor-img" src="mmall_index_files/floor2-4.jfif" alt="数码相机">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100015">
+                    <span class="floor-text">3C配件</span>
+                    <img class="floor-img" src="mmall_index_files/floor2-5.jfif" alt="3C配件">
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="floor-wrap">
+        <h1 class="floor-title">F3 服装箱包</h1>
+        <ul class="floor-list">
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100016">
+                    <span class="floor-text">女装</span>
+                    <img class="floor-img" src="mmall_index_files/floor3-1.jfif" alt="女装">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100017">
+                    <span class="floor-text">帽子专区</span>
+                    <img class="floor-img" src="mmall_index_files/floor3-2.jfif" alt="帽子专区">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100018">
+                    <span class="floor-text">旅行箱</span>
+                    <img class="floor-img" src="mmall_index_files/floor3-3.jfif" alt="旅行箱">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100019">
+                    <span class="floor-text">手提包</span>
+                    <img class="floor-img" src="mmall_index_files/floor3-4.jfif" alt="手提包">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100020">
+                    <span class="floor-text">保暖内衣</span>
+                    <img class="floor-img" src="mmall_index_files/floor3-5.jfif" alt="保暖内衣">
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="floor-wrap">
+        <h1 class="floor-title">F4 食品生鲜</h1>
+        <ul class="floor-list">
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100021">
+                    <span class="floor-text">最爱零食</span>
+                    <img class="floor-img" src="mmall_index_files/floor4-1.jfif" alt="最爱零食">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100022">
+                    <span class="floor-text">生鲜</span>
+                    <img class="floor-img" src="mmall_index_files/floor4-2.jfif" alt="生鲜">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100023">
+                    <span class="floor-text">半成品菜</span>
+                    <img class="floor-img" src="mmall_index_files/floor4-3.jfif" alt="半成品菜">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100024">
+                    <span class="floor-text">速冻专区</span>
+                    <img class="floor-img" src="mmall_index_files/floor4-4.jfif" alt="速冻专区">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100025">
+                    <span class="floor-text">进口牛奶</span>
+                    <img class="floor-img" src="mmall_index_files/floor4-5.jfif" alt="进口牛奶">
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="floor-wrap">
+        <h1 class="floor-title">F5 酒水饮料</h1>
+        <ul class="floor-list">
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100026">
+                    <span class="floor-text">白酒</span>
+                    <img class="floor-img" src="mmall_index_files/floor5-1.jfif" alt="白酒">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100027">
+                    <span class="floor-text">红酒</span>
+                    <img class="floor-img" src="mmall_index_files/floor5-2.jfif" alt="红酒">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100028">
+                    <span class="floor-text">饮料</span>
+                    <img class="floor-img" src="mmall_index_files/floor5-3.jfif" alt="饮料">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100029">
+                    <span class="floor-text">调制鸡尾酒</span>
+                    <img class="floor-img" src="mmall_index_files/floor5-4.jfif" alt="调制鸡尾酒">
+                </a>
+            </li>
+            <li class="floor-item">
+                <a href="http://shopdemo.wephp.com/list.html?categoryId=100030">
+                    <span class="floor-text">进口洋酒</span>
+                    <img class="floor-img" src="mmall_index_files/floor5-5.jfif" alt="进口洋酒">
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="footer">
+    <div class="w">
+        <div class="links"><a class="link" href="http://www.wephp.com/" target="_blank">维博网络</a> | <a class="link"
+                                                                                                      href="http://www.wephp.com/"
+                                                                                                      target="_blank">百度</a>
+            | <a class="link" href="http://www.wephp.com/" target="_blank">淘宝</a> | <a class="link"
+                                                                                       href="http://www.wephp.com/"
+                                                                                       target="_blank">知乎</a></div>
+        <p class="copyright"> Copyright © 2017 www.wephp.com All Right Reserved </p></div>
+</div>
+<script src="mmall_index_files/jquery.js"></script>
+
+<script type="text/javascript" src="mmall_index_files/base.js"></script>
+<script type="text/javascript" src="mmall_index_files/index.js"></script>
+</body>
+</html>
