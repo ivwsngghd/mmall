@@ -10,6 +10,7 @@ import com.mmall.service.IShippingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -25,7 +26,7 @@ public class ShippingController {
     @Autowired
     private IShippingService iShippingService;
 
-    @RequestMapping("add.do")
+    @RequestMapping(value = "add.do")
     @ResponseBody
     public ServerResponse add(HttpSession session, Shipping shipping) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -34,6 +35,7 @@ public class ShippingController {
         }
 
         return iShippingService.add(user.getId(), shipping);
+
     }
 
     @RequestMapping("del.do")

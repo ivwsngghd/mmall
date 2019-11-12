@@ -9,7 +9,7 @@ public class ProductDetailVo {
     private String name;
     private String subtitle;
     private String mainImage;
-    private String subImage;
+    private String subImages;
     private String detail;  //备注
     private BigDecimal price;
 
@@ -64,12 +64,12 @@ public class ProductDetailVo {
         this.mainImage = mainImage;
     }
 
-    public String getSubImage() {
-        return subImage;
+    public String getSubImages() {
+        return subImages;
     }
 
-    public void setSubImage(String subImage) {
-        this.subImage = subImage;
+    public void setSubImages(String subImages) {
+        this.subImages = subImages;
     }
 
     public String getDetail() {

@@ -10,6 +10,7 @@ import com.mmall.service.IFileService;
 import com.mmall.service.IProductService;
 import com.mmall.service.IUserService;
 import com.mmall.util.PropertiesUtil;
+import com.mmall.vo.ProductDetailVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,12 @@ public class ProductManageController {
     @Autowired
     private IFileService iFileService;
 
+    /**
+     * 新增或者更新商品 (保存)
+     * @param session
+     * @param product
+     * @return
+     */
     @RequestMapping("save.do")
     @ResponseBody
     public ServerResponse productSave(HttpSession session, Product product) {
@@ -71,7 +78,7 @@ public class ProductManageController {
 
     @RequestMapping("detail.do")
     @ResponseBody
-    public ServerResponse getDetail(HttpSession session, Integer productId) {
+    public ServerResponse<ProductDetailVo> getDetail(HttpSession session, Integer productId) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");

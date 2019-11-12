@@ -9,6 +9,7 @@ import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
 import com.mmall.service.IOrderService;
+import com.mmall.vo.OrderProductVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,9 +61,9 @@ public class OrderController {
 
     @RequestMapping("get_order_cart_product.do")
     @ResponseBody
-    public ServerResponse getOrderCartProduct(HttpSession session){
+    public ServerResponse<OrderProductVo> getOrderCartProduct(HttpSession session){
         User user = (User)session.getAttribute(Const.CURRENT_USER);
-        if(user ==null){
+        if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
         }
         return iOrderService.getOrderCartProduct(user.getId());

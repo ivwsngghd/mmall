@@ -1,5 +1,19 @@
 
 
+11/12
+修復bug 严格注意后台的pojo字段和接口一致，譬如subImages带s
+后台在Requestmapping 指定对应的请求方法，如果请求方法错误，会弹出405
+团队合作时，强烈建议加上Method字段，限制请求方式！！！
+@RequestMapping(value = "add.do",method = RequestMethod.POST)
+
+内存不足，无法线上实时编译
+
+tomcat 在配置文件中加上了 URIEncoding = "utf-8" ;
+否则会获取乱码，web.xml的配置无法解决这个问题
+
+11/10
+修复bug：在生成订单的时候无法正确获取购物车信息，导致无法正确生成订单
+
 11/7
 修复bug,注意MyBatis查询的数据的顺序要和pojo类里的构造函数顺序要一致，否则会报错；
 

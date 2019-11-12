@@ -32,7 +32,7 @@ public class ShippingServiceImpl implements IShippingService {
 
     public ServerResponse<String> del(Integer userId,Integer shippingId){
 
-        int rowCount = shippingMapper.deleteByPrimaryKeyUserId(userId, shippingId);
+        int rowCount = shippingMapper.deleteByShippingIdUserId(userId, shippingId);
         if (rowCount > 0){
             return ServerResponse.createBySuccessMessage("删除地址成功");
         }
@@ -42,7 +42,7 @@ public class ShippingServiceImpl implements IShippingService {
 
     public ServerResponse<String> update(Integer userId, Shipping shipping){
         shipping.setUserId(userId); //当前登录的userId
-        int rowCount = shippingMapper.updateByPrimaryKeyUserId(shipping);
+        int rowCount = shippingMapper.updateByShipping(shipping);
         if (rowCount > 0){
             return ServerResponse.createBySuccessMessage("更新地址成功");
         }
@@ -54,7 +54,7 @@ public class ShippingServiceImpl implements IShippingService {
         if (shipping == null){
             return ServerResponse.createByErrorByMessage("无法查询到该地址");
         }
-        return ServerResponse.createBySuccess("更新地址成功",shipping);
+        return ServerResponse.createBySuccess("查询地址成功",shipping);
     }
 
     public ServerResponse<PageInfo> list(Integer userId,int pageNum,int pageSize){

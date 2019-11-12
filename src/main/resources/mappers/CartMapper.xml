@@ -170,7 +170,7 @@
 
 
 
-  <select id="selectCheckedCartByUserId" parameterType="int" resultMap="BaseResultMap">
+  <select id="selectCheckedCartByUserId" parameterType="integer" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
     from mmall_cart

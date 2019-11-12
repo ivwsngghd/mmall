@@ -201,7 +201,7 @@
   </update>
 
 
-  <select id="selectByShippingIdUserId" resultMap="BaseResultMap" parameterType="map">
+  <select id="selectByPrimaryKeyUserId" resultMap="BaseResultMap" parameterType="map">
     SELECT
     <include refid="Base_Column_List"/>
     from mmall_shipping

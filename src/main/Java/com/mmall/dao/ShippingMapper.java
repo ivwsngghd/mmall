@@ -8,7 +8,7 @@ import java.util.List;
 public interface ShippingMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int deleteByPrimaryKeyUserId(@Param("userId") Integer userId, @Param("shippingId") Integer shippingId);
+    int deleteByShippingIdUserId(@Param("userId") Integer userId, @Param("shippingId") Integer shippingId);
 
     int insert(Shipping record);
 
@@ -20,9 +20,9 @@ public interface ShippingMapper {
 
     int updateByPrimaryKey(Shipping record);
 
-    int updateByPrimaryKeyUserId(Shipping record);
+    int updateByShipping(Shipping record);
 
-    Shipping selectByPrimaryKeyUserId(@Param("userId") Integer userId, @Param("id") Integer id);
+    Shipping selectByPrimaryKeyUserId(@Param("userId") Integer userId, @Param("shippingId") Integer shippingId);
 
     List<Shipping> selectByUserId(Integer userId);
 

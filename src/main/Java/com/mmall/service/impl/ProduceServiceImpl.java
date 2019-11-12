@@ -1,6 +1,5 @@
 package com.mmall.service.impl;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
@@ -101,7 +100,7 @@ public class ProduceServiceImpl implements IProductService {
         productDetailVo.setSubtitle(product.getSubtitle());
         productDetailVo.setPrice(product.getPrice());
         productDetailVo.setMainImage(product.getMainImage());
-        productDetailVo.setSubImage(product.getSubImages());
+        productDetailVo.setSubImages(product.getSubImages());
         productDetailVo.setCategoryId(product.getCategoryId());
         productDetailVo.setDetail(product.getDetail());
         productDetailVo.setName(product.getName());
