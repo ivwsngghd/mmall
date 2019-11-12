@@ -276,7 +276,6 @@
 
         </plugins>
 
-
         <resources>
             <resource>
                 <directory>src/main/resources.${deploy.type}</directory>
