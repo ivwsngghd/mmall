@@ -10,7 +10,7 @@
 
 #maven ignore
 target/
-
+src/test/
 
 #eclipse ignore
 .settings/
