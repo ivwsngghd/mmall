@@ -59,7 +59,7 @@ public class ProductManageController {
         }
     }
 
-    @RequestMapping("set_sales_status.do")
+    @RequestMapping("set_sale_status.do")
     @ResponseBody
     public ServerResponse set_sales_status(HttpSession session, Integer productId, Integer status) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
