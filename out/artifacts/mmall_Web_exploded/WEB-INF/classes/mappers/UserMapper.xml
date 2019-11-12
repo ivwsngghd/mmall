@@ -192,7 +192,7 @@
 
   <update id="updatePasswordByUsername" parameterType="map">
     update mmall_user
-    SET password = #{passwordNew},update_time = now()
+    SET password = #{md5Password},update_time = now()
     where username = #{username}
   </update>
 

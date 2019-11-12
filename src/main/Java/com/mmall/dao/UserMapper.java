@@ -26,7 +26,7 @@ public interface UserMapper {
 
     int checkAnswer(@Param("username")String username,@Param("question")String question,@Param("answer")String answer);
 
-    Integer updatePasswordByUsername(@Param("username")String username,@Param("md5PasswordNew")String md5PasswordNew);
+    Integer updatePasswordByUsername(@Param("username")String username,@Param("md5Password")String md5Password);
 
     /**
      * 检查当前用户的密码是否存在(即输入的旧密码是否正确)
