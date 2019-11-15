@@ -11,7 +11,7 @@
 #maven ignore
 target/
 src/test/
-/out/artifacts/mmall_Web_exploded
+
 
 #eclipse ignore
 .settings/
