@@ -65,13 +65,7 @@ maven 环境隔离
 
 用户模块
 -
-1. 登陆、用户名验证、注册
-2. 忘记密码、提交问题答案、重置密码
-3. 获取用户信息、更新、退出登陆
-
-
-学习目标:
-
+需要注意：
 - 横向越权、纵向越权安全漏洞 
     - 横向越权：攻击者尝试访问与他拥有相同权限的用户的资源
     - 纵向越权：低级别攻击者尝试访问高级别用户的资源
@@ -90,23 +84,11 @@ public class ServerResonse<T> implements Serializable{
 }
 ```
 - MyBatis-plugin使用技巧
-- session的使用
-- 方法局部演进
-
 
 分类管理模块开发
 - 
 
-功能介绍：
-- 获取结点
-- 增加结点
-- 修改名字
-- 获取分类ID
-- 递归子结点ID
-
-
-
-学习目标：
+重点：
 - 如何设计和封装无限层级的树状数据结构
 - 递归算法的设计思想(重点，递归出口)
 - 如何处理复杂数据的排重
@@ -115,26 +97,11 @@ public class ServerResonse<T> implements Serializable{
 商品模块开发
 -
 
-功能
-
-前台功能
--  产品搜索
--  动态排序
--  商品详情
--  ······
-
-
 后台功能
-- 商品列表
-- 商品搜索
 - 图片上传◆◆◆◆
 - 富文本上传◆◆◆ sim editor 编码 对返回的json有自己固定的格式
-- 商品详情
-- 商品上下架
-- 增加商品
-- 更新商品
 
-学习目标
+重点:
 - FTP服务器的对接 ★
 - SpringMVC文件上传
 - 流读取Properties配置文件
@@ -162,24 +129,6 @@ Dao -> Controller+Service
 - Cart（用户和数据的关联关系）  是 POJO
 - VO CartProductVo，通过ServerResponse<>封装返回前端
 
-```
-CREATE TABLE `mmall_product` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品id',
-  `category_id` int(11) NOT NULL COMMENT '分类id,对应mmall_category表的主键',
-  `name` varchar(100) NOT NULL COMMENT '商品名称',
-  `subtitle` varchar(200) DEFAULT NULL COMMENT '商品副标题',
-  `main_image` varchar(500) DEFAULT NULL COMMENT '产品主图,url相对地址',
-  `sub_images` text COMMENT '图片地址,json格式,扩展用',
-  `detail` text COMMENT '商品详情',
-  `price` decimal(20,2) NOT NULL COMMENT '价格,单位-元保留两位小数',
-  `stock` int(11) NOT NULL COMMENT '库存数量',
-  `status` int(6) DEFAULT '1' COMMENT '商品状态.1-在售 2-下架 3-删除',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8
-```
-
 10/12更新
 购物车模块
 -
@@ -189,7 +138,6 @@ CREATE TABLE `mmall_product` (
 - 购物车列表实现
 
 学习目标：
-
 - 设计思想
 - 高复用的购物车核心方法 (购物车的商品数量，总价)
 - ★解决浮点型在商业运算中丢失精度的问题
@@ -232,11 +180,7 @@ CREATE TABLE `mmall_product` (
 - 收款成功之后会有第二次回调
 - 
 
-
-
-
-学习目标：
-
+注意：
 - 避免业务逻辑中横向越权和纵向越权等安全漏洞
 - 设计实用、安全、扩展性强打的常量、枚举类
 - 订单号生成规则、订单严谨性判断
