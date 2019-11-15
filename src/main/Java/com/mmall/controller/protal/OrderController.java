@@ -116,6 +116,7 @@ public class OrderController {
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
         }
+        //ServletContext().getRealPath()会加上发布的项目目录作为前缀；
         String path = request.getSession().getServletContext().getRealPath("upload");
         return iOrderService.pay(user.getId(),orderNo,path);
     }

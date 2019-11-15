@@ -218,7 +218,7 @@ public class ProduceServiceImpl implements IProductService {
         }
 
         if (StringUtils.isNotBlank(keyword)) {
-            keyword = new StringBuilder().append("%").append("%").toString();
+            keyword = new StringBuilder().append("%").append(keyword).append("%").toString();
         }
         PageHelper.startPage(pageNum, pageSize);
         //排序处理
