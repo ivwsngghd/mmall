@@ -1,0 +1,13 @@
+#dev env
+ftp.server.ftpIp=182.92.218.194
+ftp.user=ftpuser
+ftp.pass=8232470785ftp
+#ftp.server.http.prefix=http://img.happymmall.com/
+ftp.server.http.prefix=http://image.imooc.com/
+#ftp.server.http.prefix=192.168.213.128/
+
+#alipay.callback.url=http://www.happymmall.com/order/alipay_callback.do
+alipay.callback.url=http://www.ivwsngghd.top/order/alipay_callback.do
+
+password.salt = geelysdafaqj23ou89ZXcj@#$@#$#@KJdjklj;D../dSF.,
+
