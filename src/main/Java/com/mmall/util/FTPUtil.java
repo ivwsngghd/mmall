@@ -36,17 +36,32 @@ public class FTPUtil {
 
     /**
      * 唯一对外开放的用于上传文件的方法upload
+     *
      * @param fileList 待上传的文件列表
      * @return 文件是否上传成功了；
      * @throws IOException 上传文件失败后的异常处理交给上层进行处理；
-     * 目前存放于Tomcat目录中
+     *                     目前存放于Tomcat目录中
      */
     public static boolean uploadFile(List<File> fileList) throws IOException {
         FTPUtil ftpUtil = new FTPUtil(ftpIp, 21, ftpUser, ftpPass);
         logger.info("开始连接ftp服务器");
-        boolean result = ftpUtil.uploadFile("img",fileList);
-        logger.info("开始连接ftp服务器，结束上传，上传结果:{}",result);
+        //根目录相对路径
+        boolean result = ftpUtil.uploadFile("img", fileList);
+        logger.info("开始连接ftp服务器，结束上传，上传结果:{}", result);
 
+        return result;
+    }
+
+    /**
+     *  分布式图片存储改良的上传方法：
+     *  即上层指定了ftp的IP，用户，服务器，密码，和存储的相对路径
+     */
+    public static boolean uploadFile(List<File> fileList, String ftpIp, String ftpUser, String ftpPass, String remotePath) throws IOException {
+        FTPUtil ftpUtil = new FTPUtil(ftpIp, 21, ftpUser, ftpPass);
+        logger.info("开始连接ftp服务器");
+        //根目录相对路径
+        boolean result = ftpUtil.uploadFile("img", fileList);
+        logger.info("开始连接ftp服务器，结束上传，上传结果:{}", result);
         return result;
     }
 
@@ -61,7 +76,7 @@ public class FTPUtil {
         boolean uploaded = false;
         FileInputStream fis = null;
         //连接FTP服务器
-        if (connectServer(this.ip,this.port,this.user,this.pwd)){
+        if (connectServer(this.ip, this.port, this.user, this.pwd)) {
             try {
                 System.out.println("开始上传文件");
                 ftpClient.changeWorkingDirectory(remotePath);   //创建ftp服务器的路径
@@ -70,15 +85,15 @@ public class FTPUtil {
                 ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
 //                ftpClient.enterLocalActiveMode(); //外部链接
                 ftpClient.enterLocalPassiveMode();  //内部链接  大多数允许
-                for (File fileItem : fileList){
+                for (File fileItem : fileList) {
                     fis = new FileInputStream(fileItem);
-                    ftpClient.storeFile(fileItem.getName(),fis);
+                    ftpClient.storeFile(fileItem.getName(), fis);
                 }
                 uploaded = true;
             } catch (IOException e) {
-                logger.error("上传文件异常",e);
+                logger.error("上传文件异常", e);
                 uploaded = false;
-            }finally {
+            } finally {
                 fis.close();
                 ftpClient.disconnect();
             }
@@ -89,6 +104,7 @@ public class FTPUtil {
 
     /**
      * 用于检测是否连接FTP服务器成功
+     *
      * @param ip
      * @param port
      * @param user

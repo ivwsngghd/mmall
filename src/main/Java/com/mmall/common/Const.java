@@ -9,6 +9,10 @@ public class Const {
     public final static String EMAIL = "email";
     public final static String USERNAME = "username";
 
+    public interface  RedisCacheExtime{
+        int REDIS_SESSION_EXTIME = 60 * 30; //session存活时间为30分钟
+    }
+
     public interface ProductListOrderBy{
         //前面代表orderBy哪个字段，后面是升序还是降序
         //Set的Contains的时间复杂度是O(1)

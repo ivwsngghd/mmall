@@ -8,40 +8,42 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
-public class PropertiesUtil {
+public class ImgServersPropertiesUtil {
 
     //org.slf4j.Logger
-    private static Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
+    private static Logger logger = LoggerFactory.getLogger(ImgServersPropertiesUtil.class);
 
     //java.util.Properties;
     private static Properties props;
 
     //该代码块用于类加载的时候，自动进行初始化加载一次；
     static {
-        String fileName = "mmall.properties";
+        String fileName = "mmall.imgServers";
         props = new Properties();
         try {
-            props.load(new InputStreamReader(PropertiesUtil.class.getClassLoader().getResourceAsStream(fileName),"UTF-8"));
+            props.load(new InputStreamReader(ImgServersPropertiesUtil.class.getClassLoader().getResourceAsStream(fileName),"UTF-8"));
         } catch (IOException e) {
             logger.error("配置文件读取异常",e);
         }
     }
 
-    public static String getProperty(String key){
+    public static String[] getProperty(String key){
         String value = props.getProperty(key.trim());
         if(StringUtils.isBlank(value)){
             return null;
         }
-        return value.trim();
+        String result[] = value.split("&");
+
+        return result;
     }
 
-    public static String getProperty(String key,String defaultValue){
-
+    public static String[] getProperty(String key,String defaultValue){
         String value = props.getProperty(key.trim());
         if(StringUtils.isBlank(value)){
             value = defaultValue;
         }
-        return value.trim();
+        String result[] = value.split("&");
+        return result;
     }
 
 
