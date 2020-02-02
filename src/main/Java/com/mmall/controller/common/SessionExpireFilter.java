@@ -20,10 +20,10 @@ public class SessionExpireFilter implements Filter {
 
     }
 
+    //todo 此处logout操作也一并进行了过滤；可优化；
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest)servletRequest;
-
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);
 
         if (StringUtils.isNotEmpty(loginToken)){

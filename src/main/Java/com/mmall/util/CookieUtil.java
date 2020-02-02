@@ -15,6 +15,8 @@ public class CookieUtil {
     //针对功能
     private final static String COOKIE_NAME = "mmall_login_token";
 
+    private final static String BACKEND_COOKIE_NAME = "backend_mmall_login_token";
+
     public static String readLoginToken(HttpServletRequest request){
         Cookie cks[] = request.getCookies();
         if(cks != null){
