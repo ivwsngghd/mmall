@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 public class CookieUtil {
 
     //域名
-    private final static String COOKIE_DOMAIN = ".ivwsngghd.top";   //一级域名；也可写二级域名；可以理解为作用域
+//    private final static String COOKIE_DOMAIN = ".ivwsngghd.top";   //一级域名；也可写二级域名；可以理解为作用域
+    private final static String COOKIE_DOMAIN = "localhost";   //一级域名；也可写二级域名；可以理解为作用域
     //针对功能
     private final static String COOKIE_NAME = "mmall_login_token";
 
@@ -28,11 +29,23 @@ public class CookieUtil {
         return null;
     }
 
+
+    //X:domain=".happymmall.com"    注意分清域名、路径之间的等级划分，区分作用域
+    //a:A.happymmall.com                    cookie:domain=A.happymmall.com;path="/"
+    //b:B.happymmall.com                    cookie:domain=B.happymmall.com;path="/"
+    //c:A.happymmall.com/test/cc            cookie:domain=A.happymmall.com;path="/test/cc"
+    //d:A.happymmall.com/test/dd            cookie:domain=A.happymmall.com;path="/test/dd"
+    //e:A.happymmall.com/test               cookie:domain=A.happymmall.com;path="/test"
+
+    //a、b可以用X的cookie，e可以用c、d的；
+    //注意cookie的domain设置
+
+
     public static void writeLoginToken(HttpServletResponse response,String token){
         Cookie ck = new Cookie(COOKIE_NAME,token);
         ck.setDomain(COOKIE_DOMAIN);
         ck.setPath("/"); //代表设置在根目录(全局)
-
+        ck.setHttpOnly(true);   //禁止通过脚本访问cookie，提高安全性
         ck.setMaxAge(60 * 60 * 24 * 365);  //-1为永久；MaxAge如果不写，不会写入硬盘，只存在内存
 
         log.info("write cookieName:{},cookieValue:{}",ck.getName(),ck.getValue());
