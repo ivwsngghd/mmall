@@ -8,9 +8,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 该类功能已经迁移至Redis；
+ * 已弃置；
+ */
 public class TokenCache {
     private static Logger logger = LoggerFactory.getLogger(TokenCache.class);
-
     public static final String TOKEN_PREFIX = "token_";
 
     //LRU算法

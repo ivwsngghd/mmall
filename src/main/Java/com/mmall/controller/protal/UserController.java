@@ -7,7 +7,7 @@ import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
 import com.mmall.util.CookieUtil;
 import com.mmall.util.JsonUtil;
-import com.mmall.util.RedisPoolUtil;
+import com.mmall.util.RedisShardedPoolUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,8 +34,8 @@ public class UserController {
         if (response.isSuccess()) {
             //在Redis中记录对应的SessionId，与之绑定的user数据；存活时间；
             CookieUtil.writeLoginToken(httpServletResponse,session.getId());    //返回客户端已经设置的COOKIE
-            RedisPoolUtil.setEx(session.getId(), JsonUtil.objToString(response.getData()),Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
-//           正确设置方式？： RedisPoolUtil.setEx(username, session.getId(),Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            RedisShardedPoolUtil.setEx(session.getId(), JsonUtil.objToString(response.getData()),Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+//           正确设置方式？： RedisShardedPoolUtil.setEx(username, session.getId(),Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
 
         }
         return response;
@@ -46,7 +46,7 @@ public class UserController {
     public ServerResponse<String> logout(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);
         CookieUtil.delLoginToken(httpServletRequest,httpServletResponse);
-        RedisPoolUtil.del(loginToken);
+        RedisShardedPoolUtil.del(loginToken);
 
 //        session.removeAttribute(Const.CURRENT_USER);
         return ServerResponse.createBySuccess();
@@ -73,7 +73,7 @@ public class UserController {
         if (StringUtils.isEmpty(loginToken)){
             return  ServerResponse.createByErrorByMessage("用户未登录，无法获取当前用户信息");
         }
-        String userJsonStr = RedisPoolUtil.get(loginToken);
+        String userJsonStr = RedisShardedPoolUtil.get(loginToken);
         User user = JsonUtil.stringToObj(userJsonStr,User.class);
         if (user != null) {
             return ServerResponse.createBySuccess(user);
@@ -109,7 +109,7 @@ public class UserController {
         if (StringUtils.isEmpty(loginToken)){
             return  ServerResponse.createByErrorByMessage("用户未登录，无法获取当前用户信息");
         }
-        String userJsonStr = RedisPoolUtil.get(loginToken);
+        String userJsonStr = RedisShardedPoolUtil.get(loginToken);
         User user = JsonUtil.stringToObj(userJsonStr,User.class);
         if (user == null) {
             return ServerResponse.createByErrorByMessage("用户未登录");
@@ -128,7 +128,7 @@ public class UserController {
         if (StringUtils.isEmpty(loginToken)){
             return  ServerResponse.createByErrorByMessage("用户未登录，无法获取当前用户信息");
         }
-        String userJsonStr = RedisPoolUtil.get(loginToken);
+        String userJsonStr = RedisShardedPoolUtil.get(loginToken);
         User user = JsonUtil.stringToObj(userJsonStr,User.class);
         if (user == null) {
             return ServerResponse.createByErrorByMessage("用户未登录");
@@ -140,7 +140,7 @@ public class UserController {
 
         ServerResponse<User> response = iUserService.updateInformation(userNewInfo);
         if (response.isSuccess()){
-            RedisPoolUtil.setEx(loginToken, JsonUtil.objToString(response.getData()),Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            RedisShardedPoolUtil.setEx(loginToken, JsonUtil.objToString(response.getData()),Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
         }
         return response;
     }
@@ -153,7 +153,7 @@ public class UserController {
         if (StringUtils.isEmpty(loginToken)){
             return  ServerResponse.createByErrorByMessage("用户未登录，无法获取当前用户信息");
         }
-        String userJsonStr = RedisPoolUtil.get(loginToken);
+        String userJsonStr = RedisShardedPoolUtil.get(loginToken);
         User user = JsonUtil.stringToObj(userJsonStr,User.class);
         if (user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,需要强制登录status=10");
