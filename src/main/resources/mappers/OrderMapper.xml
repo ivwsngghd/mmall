@@ -33,6 +33,7 @@
     delete from mmall_order
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.mmall.pojo.Order" >
     insert into mmall_order (id, order_no, user_id, 
       shipping_id, payment, payment_type, 
@@ -236,8 +237,22 @@
     ORDER BY  create_time desc
   </select>
 
+  <select id="selectOrderStatusByCreateTime" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM mmall_order
+    where status = #{status}
+    <![CDATA[
+    and create_time <= #{date}
+    ]]>
+    order by create_time desc;
+  </select>
 
-
+  <update id="closeOrderByOrderId" parameterType="integer">
+    update mmall_order
+    set status = 0
+    where id = #{id}
+  </update>
 
 
 

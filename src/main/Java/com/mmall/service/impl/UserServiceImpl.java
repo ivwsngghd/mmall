@@ -199,7 +199,7 @@ public class UserServiceImpl implements IUserService {
     //backend
 
     public ServerResponse checkAdminRole(User user){
-        if (user != null && user.getRole().intValue() == Const.Role.ROLE_ADMIN){
+        if (user != null && user.getRole() == Const.Role.ROLE_ADMIN){
             return ServerResponse.createBySuccess();
         }
         return ServerResponse.createByErrorByMessage("非管理员权限");

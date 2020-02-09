@@ -1,7 +1,25 @@
+2/9
+学习使用分布式锁双重防死锁
+并且增加了基于分布式的定时删除关闭订单的功能；
+
+
+2/1
+使用了Spring MVC拦截器实现了后台的权限认证功能；
+RESTful风格的接口优化；
+
+1/15
+学习使用Spring Session + Redis,实现对代码无侵入式的Session管理，缺点是仅支持单个Redis节点；已弃置；
+使用SpringMVC对全局异常进行包装；
+
+12/30
+把RedisPool进行更新升级优化，更新成RedisShardedPool；
+新的分片式RedisShardedPoolUtil，支持多个Redis的配置使用，增加了横向拓展性；
+
 12/18
-增加两个pojo，imageServerInfo和imageInfo;准备用于实现分布式图片存储；
-轮询算法可以自己进行编写，进行负载均衡；
-在配置文件里配置好可以使用的图片服务器；没有写则不使用对应的图片服务器；
+封装了JsonUtil工具类，实现类的序列化和反序列化操作；
+封装了RedisPoolUtil工具类，实现对Redis的基本操作；
+把Session的缓存转移到Redis中；
+编写SessionExpireFilter，对操作的Session进行时间更新；
 
 11/15 
 修復了模糊查询的表达式BUG
@@ -25,7 +43,7 @@ tomcat 在配置文件中加上了 URIEncoding = "utf-8" ;
 修复bug,注意MyBatis查询的数据的顺序要和pojo类里的构造函数顺序要一致，否则会报错；
 
 11/5
-终于备案完成了...
+备案时间
 
 10/31
 maven 环境隔离

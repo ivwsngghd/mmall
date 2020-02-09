@@ -36,7 +36,11 @@ public interface OrderMapper {
 
     List<Order> selectByUserId(Integer userId);
 
-
     List<Order> selectAllOrder();
 
+    //用于查找需要关闭删除的订单
+    List<Order> selectOrderStatusByCreateTime(@Param("status") Integer status,@Param("date") String date);
+
+    //关闭订单
+    int closeOrderByOrderId(Integer id);
 }

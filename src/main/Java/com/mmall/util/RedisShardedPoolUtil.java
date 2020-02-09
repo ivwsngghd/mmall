@@ -52,6 +52,40 @@ public class RedisShardedPoolUtil {
         return result;
     }
 
+    public static Long setnx(String key,String value){
+        ShardedJedis jedis = null;
+        Long result = null;
+
+        try {
+            jedis = RedisShardedPool.getShardedJedis();
+            result = jedis.setnx(key,value);
+        } catch (Exception e) {
+            log.error("setnx key:{} value:{} error",key,value,e);
+            RedisShardedPool.returnResource(jedis);
+            return null;
+        }
+
+        RedisShardedPool.returnResource(jedis); //释放资源
+        return result;
+    }
+
+    public static String getSet(String key,String value){
+        ShardedJedis jedis = null;
+        String result = null;
+
+        try {
+            jedis = RedisShardedPool.getShardedJedis();
+            result = jedis.getSet(key,value);   //具有原子性的操作
+        } catch (Exception e) {
+            log.error("getset key:{} value:{} error",key,value,e);
+            RedisShardedPool.returnResource(jedis);
+            return null;
+        }
+
+        RedisShardedPool.returnResource(jedis); //释放资源
+        return result;
+    }
+
     /**
      * 该方法用于设置key的有效期，单位是秒
      * 设置成功返回1，否则0

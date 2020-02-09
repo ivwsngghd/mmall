@@ -47,4 +47,7 @@ public interface IOrderService {
     ServerResponse<String> manageSendGoods(Long orderNo);
 
 
+    //删除hour个小时之前的订单
+    void closeOrder(int hour);
+
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * 碎片化RedisPool
- * 即配置针对多个RedisServer的连接工具
+ * 即配置针对多个RedisServer的连接工具,可把多个Redis节点合为一个使用；
  */
 public class RedisShardedPool {
     private static ShardedJedisPool pool = null;  //Jedis连接池

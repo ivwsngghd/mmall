@@ -8,7 +8,7 @@ import redis.clients.jedis.Jedis;
 /**
  *  用于操作Redis连接池的工具
  *  使用Sharded优化为分布式；
- *  该类已弃置不用；
+ *  @deprecated
  */
 @Slf4j
 public class RedisPoolUtil {

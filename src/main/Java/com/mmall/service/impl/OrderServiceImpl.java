@@ -29,6 +29,7 @@ import com.mmall.vo.OrderVo;
 import com.mmall.vo.ShippingVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -598,5 +599,24 @@ public class OrderServiceImpl implements IOrderService {
         return ServerResponse.createByErrorByMessage("订单不存在");
     }
 
+    @Override
+    public void closeOrder(int hour) {
+        Date closeDateTime = DateUtils.addHours(new Date(), -hour);  //要用于做对比的时间，也就是当时时间减去一个小时；
+        List<Order> orderList = orderMapper.selectOrderStatusByCreateTime(Const.OrderStatusEnum.NO_PAY.getCode(), DateTimeUtil.dateToStr(closeDateTime));
+        for (Order order : orderList) {
+            List<OrderItem> orderItemList = orderItemMapper.getByOrderNo(order.getOrderNo());
+            for (OrderItem orderItem : orderItemList) {
+                //此处查询涉及并发锁，必须使用主键，否则会触发table锁（InnoDB）
+                Integer stock = productMapper.selectStockByProductId(orderItem.getProductId());
+                if (stock == null) continue;    //商品删除后直接跳过；
+                Product product = new Product();
+                product.setId(orderItem.getProductId());
+                product.setStock(stock + orderItem.getQuantity());
+                productMapper.updateByPrimaryKeySelective(product);
+            }//把订单里的商品库存逐一返回至数据库完毕
+            orderMapper.closeOrderByOrderId(order.getId());     //订单删除
+            logger.info("关闭订单OrderNo: {}", order.getOrderNo());
+        }//目标订单均删除完毕
 
+    }
 }

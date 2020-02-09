@@ -207,16 +207,17 @@ public class ProduceServiceImpl implements IProductService {
         if (categoryId != null) {
             Category category = categoryMapper.selectByPrimaryKey(categoryId);
             if (category == null && StringUtils.isBlank(keyword)) {
-                //没有该分类，并且没有关键字，返回一个空的结果集，不报错；
+                //没有该分类，且没有传入关键字，返回一个空的结果集，不报错；
                 PageHelper.startPage(pageNum, pageSize);
                 List<ProductListVo> productListVoList = Lists.newArrayList();
                 PageInfo pageInfo = new PageInfo(productListVoList);
 //                pageInfo.setList(productListVoList);
                 return ServerResponse.createBySuccess(pageInfo);
             }
-            categoryIdList = iCategoryService.selectCategoryAndChildrenById(category.getId()).getData();
+            categoryIdList = iCategoryService.selectCategoryAndChildrenById(categoryId).getData();
         }
 
+        //查询不到该分类，但有关键字
         if (StringUtils.isNotBlank(keyword)) {
             keyword = new StringBuilder().append("%").append(keyword).append("%").toString();
         }
