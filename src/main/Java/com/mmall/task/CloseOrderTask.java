@@ -56,7 +56,7 @@ public class CloseOrderTask {
         log.info("关闭订单定时任务完成");
     }
 
-//    @Scheduled(cron = "0 */1 * * * ?")
+    @Scheduled(cron = "0 */1 * * * ?")
     public void closeOrderTaskV3() {
         log.info("关闭订单定时任务启动");
         long lockTimeout = Long.parseLong(PropertiesUtil.getProperty("lock.timeout", "5000"));
@@ -74,7 +74,7 @@ public class CloseOrderTask {
                 //返回给定的key旧值，通过旧值判断，是否可以获取锁
                 //情况：当key没有旧值，即key不存在时，返回nil。 因此可以直接获取锁
                 //set了一个新的value值，获取旧的值
-                if (getSetResult == null || (getSetResult != null && StringUtils.equals(lockValueStr,getSetResult))){   //如果获取到的值，但改变了，证明已经有其他服务器对其进行了操作；(不是最先的服务器)
+                if (getSetResult == null || StringUtils.equals(lockValueStr, getSetResult)){   //如果获取到的值，但改变了，证明已经有其他服务器对其进行了操作；(不是最先的服务器)
                     //唯一获取到了锁的服务器就可以进入到这里
                     //乐观锁原理
                     closeOrder(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
@@ -88,7 +88,7 @@ public class CloseOrderTask {
         log.info("关闭订单定时任务完成");
     }
 
-    @Scheduled(cron = "0 */1 * * * ?")
+//    @Scheduled(cron = "0 */1 * * * ?")
     public void closeOrderTaskV4(){
         RLock lock = redissonManager.getRedisson().getLock(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
 
@@ -96,7 +96,8 @@ public class CloseOrderTask {
         try {
             if (getLock = lock.tryLock(0,5, TimeUnit.SECONDS)){
                 log.info("Redisson获取分布式锁:{},ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
-                int hour = Integer.parseInt(PropertiesUtil.getProperty("close.order.task.time.hour"));
+                Thread.sleep(1000);
+                int hour = Integer.parseInt(PropertiesUtil.getProperty("close.order.task.time.hour","1"));
 //                iOrderService.closeOrder(hour);
             }else {
                 log.info("Redisson没有获取到分布式锁:{},ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
@@ -113,11 +114,11 @@ public class CloseOrderTask {
     }
 
     private void closeOrder(String lockName) {
-        RedisShardedPoolUtil.expire(lockName, 5);//有效期为5秒，防止死锁；但要确保这5秒内其他服务器均已经放弃锁的获取，否则该方法会再次执行；
+        RedisShardedPoolUtil.expire(lockName, 10);//有效期为10秒，防止死锁；但要确保这5秒内其他服务器均已经放弃锁的获取，否则该方法会再次执行；
         log.info("获取{},ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread());
         int hour = Integer.parseInt(PropertiesUtil.getProperty("close.order.task.time.hour", "2"));
-        //确保删除任务在5秒内完成，否则需要把锁延时；
-//        iOrderService.closeOrder(hour);
+        //确保删除任务在设定时间内完成，否则需要把锁延时；
+        iOrderService.closeOrder(hour);
         RedisShardedPoolUtil.del(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
         log.info("释放{},ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
         log.info("===================================");
