@@ -21,7 +21,7 @@ public class FileServiceImpl implements IFileService {
      *
      * @param file 待传输文件流
      * @param path ftp服务器的根下的相对路径
-     * @return
+     * @return 返回的是访问路径；
      */
     public String upload(MultipartFile file,String path){
         String fileName = file.getOriginalFilename();

@@ -118,24 +118,4 @@ public class RedisPoolUtil {
         return result;
     }
 
-        /*
-    public static void main(String args[]){
-
-        Jedis jedis = RedisPool.getJedis();
-
-        RedisPoolUtil.set("keyTest","value");
-
-        String value = RedisPoolUtil.get("keyTest");
-
-        RedisPoolUtil.setEx("keyex","valueEx",60*10);
-
-        RedisPoolUtil.expire("keyTest",60*20);
-
-        RedisPoolUtil.del("keyTest");
-
-        System.out.println("end");
-
-    }
-         */
-
 }

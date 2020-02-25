@@ -24,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
@@ -167,26 +166,14 @@ public class ProductManageController {
 
     /**
      * 上传文件
-     *
      * @param file 注意value = upload_file 要和前台的 name 属性一致，否则无法上传；
      */
     @RequestMapping("upload.do")
     @ResponseBody
-    public ServerResponse upload(HttpServletRequest httpServletRequest, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
-//        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
-//        if (StringUtils.isEmpty(loginToken)) {
-//            return ServerResponse.createByErrorByMessage("用户未登录，无法获取当前用户信息");
-//        }
-//        String userJsonStr = RedisShardedPoolUtil.get(loginToken);
-//        User user = JsonUtil.stringToObj(userJsonStr, User.class);
-//        if (user == null) {
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
-//        }
-//
-//        if (iUserService.checkAdminRole(user).isSuccess()) {
-            String path = request.getSession().getServletContext().getRealPath("upload");
-            String targetFileName = iFileService.upload(file, path);
-            String url = PropertiesUtil.getProperty("ftp.server.http.prefix") + targetFileName;
+    public ServerResponse upload(@RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
+            String path = request.getSession().getServletContext().getRealPath("upload");   //获取要上传的路径
+            String targetFileName = iFileService.upload(file, path);                        //文件流和上传的路径
+            String url = PropertiesUtil.getProperty("ftp.server.http.prefix") + targetFileName; //把访问路径返回给前端；
 
             Map<String, String> fileMap = Maps.newHashMap();
             fileMap.put("uri", targetFileName);
@@ -197,6 +184,9 @@ public class ProductManageController {
 //        }
     }
 
+    /**
+     * 该接口用于富文本(文字图片的集合)的上传
+     */
     @RequestMapping("richtext_img_upload.do")
     @ResponseBody
     public Map richtextImgUpload(HttpServletRequest httpServletRequest, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
@@ -218,14 +208,14 @@ public class ProductManageController {
          */
         User user = JsonUtil.stringToObj(userJsonStr, User.class);
         if (user != null && iUserService.checkAdminRole(user).isSuccess()) {
-            String path = request.getSession().getServletContext().getRealPath("upload");
-            String targetFileName = iFileService.upload(file, path);
+            String path = request.getSession().getServletContext().getRealPath("upload");   //获取路径
+            String targetFileName = iFileService.upload(file, path);                        //上传
             if (StringUtils.isBlank(targetFileName)) {
                 resultMap.put("success", false);
                 resultMap.put("msg", "上传失败");
                 return resultMap;
             }
-            String url = PropertiesUtil.getProperty("ftp.server.http.prefix") + targetFileName;
+            String url = PropertiesUtil.getProperty("ftp.server.http.prefix") + targetFileName; //返回访问名字
             resultMap.put("success", true);
             resultMap.put("msg", "上传成功");
             resultMap.put("file_path", url);

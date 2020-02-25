@@ -1,6 +1,7 @@
 package com.mmall.controller.common.interceptor;
 
 import com.mmall.common.Const;
+import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
 import com.mmall.util.CookieUtil;
@@ -56,7 +57,7 @@ public class AuthorityInterceptor implements HandlerInterceptor {
         }
         //成功获取了用户信息之后，使用RedisUtil工具进行权限登陆操作
         User user = null;
-        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
+        String loginToken = CookieUtil.manageReadLoginToken(httpServletRequest);
         if (StringUtils.isNotEmpty(loginToken)) {
             String userJsonStr = RedisShardedPoolUtil.get(loginToken);
             user = JsonUtil.stringToObj(userJsonStr, User.class);
@@ -79,13 +80,12 @@ public class AuthorityInterceptor implements HandlerInterceptor {
             }
 
             if (user == null){
-                out.print(JsonUtil.objToString(ServerResponse.createByErrorByMessage("拦截器拦截，用户未登录")));
+                out.print(JsonUtil.objToString(ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"拦截器拦截，用户未登录")));
             }else {
-                out.print(JsonUtil.objToString(ServerResponse.createByErrorByMessage("拦截器拦截，用户无权限")));
+                out.print(JsonUtil.objToString(ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"拦截器拦截，用户无权限")));
             }
             out.flush();
             out.close();//关闭流操作
-
             return false;   //即不会执行Controller里面的方法
         }
 
