@@ -36,28 +36,26 @@ public class UserController {
             //在Redis中记录对应的SessionId，与之绑定的user数据；存活时间；
             CookieUtil.writeLoginToken(httpServletResponse, session.getId());    //返回客户端已经设置的COOKIE
             RedisShardedPoolUtil.setEx(session.getId(), JsonUtil.objToString(response.getData()), Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
-
         }
         return response;
     }
 
-
     @RequestMapping(value = "logout.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        StringBuffer stringBuffer = httpServletRequest.getRequestURL();
-        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
+    public ServerResponse<String> logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,@RequestParam("status") String status) {
+        String loginToken;
 
         //把后台登出和前台登出分离
-        if (stringBuffer.indexOf("admin") != -1) {
+        if (StringUtils.equals("admin",status)) {
+            loginToken = CookieUtil.readLoginToken(httpServletRequest,1);
             CookieUtil.manageDelLoginToken(httpServletRequest, httpServletResponse);
         } else {
+            loginToken = CookieUtil.readLoginToken(httpServletRequest);
             CookieUtil.delLoginToken(httpServletRequest, httpServletResponse);
         }
 
         RedisShardedPoolUtil.del(loginToken);
 
-//        session.removeAttribute(Const.CURRENT_USER);
         return ServerResponse.createBySuccess();
     }
 
@@ -158,7 +156,7 @@ public class UserController {
     public ServerResponse<User> get_information(HttpServletRequest httpServletRequest) {
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);
         if (StringUtils.isEmpty(loginToken)) {
-            return ServerResponse.createByErrorByMessage(ResponseCode.NEED_LOGIN.getDesc());
+            return ServerResponse.createByErrorByMessage("用户未登录,无法获取当前用户的信息");
         }
         String userJsonStr = RedisShardedPoolUtil.get(loginToken);
         User user = JsonUtil.stringToObj(userJsonStr, User.class);

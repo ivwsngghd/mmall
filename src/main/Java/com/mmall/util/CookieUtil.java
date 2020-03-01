@@ -17,18 +17,28 @@ public class CookieUtil {
     private final static String DEFAULT_LOGIN_COOKIE_NAME = "mmall_login_token";
     private final static String MANAGE_LOGIN_COOKIE_NAME = "manage_mmall_login_token";
 
-    public static String readLoginToken(HttpServletRequest request) {
+    /**
+     * @param condition 默认登出前台  如果是1则登出后台
+     */
+    public static String readLoginToken(HttpServletRequest request, int condition) {
+        String logoutCookieName;
         Cookie cks[] = request.getCookies();
+        logoutCookieName = (condition == 1) ? MANAGE_LOGIN_COOKIE_NAME : DEFAULT_LOGIN_COOKIE_NAME;
+
         if (cks != null) {
             for (Cookie ck : cks) {
                 log.info("read cookieName:{},cookieValue:{}", ck.getName(), ck.getValue());
-                if (StringUtils.equals(ck.getName(), DEFAULT_LOGIN_COOKIE_NAME)) {
+                if (StringUtils.equals(ck.getName(), logoutCookieName)) {
                     log.info("return cookieName:{},cookieValue:{}", ck.getName(), ck.getValue());
                     return ck.getValue();
                 }
             }
         }
         return null;
+    }
+
+    public static String readLoginToken(HttpServletRequest request) {
+        return readLoginToken(request,0);
     }
 
     public static String manageReadLoginToken(HttpServletRequest request) {
@@ -85,7 +95,7 @@ public class CookieUtil {
         Cookie[] cks = request.getCookies();
         if (cks != null) {
             for (Cookie ck : cks) {
-                if (StringUtils.equals(ck.getName(),DEFAULT_LOGIN_COOKIE_NAME)) {
+                if (StringUtils.equals(ck.getName(), DEFAULT_LOGIN_COOKIE_NAME)) {
                     ck.setDomain(COOKIE_DOMAIN);
                     ck.setPath("/");
                     ck.setMaxAge(0); //代表删除此cookie
@@ -101,7 +111,7 @@ public class CookieUtil {
         Cookie[] cks = request.getCookies();
         if (cks != null) {
             for (Cookie ck : cks) {
-                if (StringUtils.equals(ck.getName(),MANAGE_LOGIN_COOKIE_NAME)) {
+                if (StringUtils.equals(ck.getName(), MANAGE_LOGIN_COOKIE_NAME)) {
                     ck.setDomain(COOKIE_DOMAIN);
                     ck.setPath("/");
                     ck.setMaxAge(0); //代表删除此cookie
