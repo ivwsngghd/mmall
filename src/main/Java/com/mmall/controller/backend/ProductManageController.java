@@ -48,22 +48,6 @@ public class ProductManageController {
     @RequestMapping("save.do")
     @ResponseBody
     public ServerResponse productSave(HttpServletRequest httpServletRequest, Product product) {
-//        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
-//        if (StringUtils.isEmpty(loginToken)) {
-//            return ServerResponse.createByErrorByMessage("用户未登录，无法获取当前用户信息");
-//        }
-//        String userJsonStr = RedisShardedPoolUtil.get(loginToken);
-//        User user = JsonUtil.stringToObj(userJsonStr, User.class);
-//        if (user == null) {
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
-//        }
-//        if (iUserService.checkAdminRole(user).isSuccess()) {
-//            //增加产品业务逻辑
-//            return iProductService.saveOrUpdateProduct(product);
-//
-//        } else {
-//            return ServerResponse.createByErrorByMessage("无权限操作");
-//        }
         return iProductService.saveOrUpdateProduct(product);
 
     }
@@ -71,22 +55,6 @@ public class ProductManageController {
     @RequestMapping("set_sale_status.do")
     @ResponseBody
     public ServerResponse set_sales_status(HttpServletRequest httpServletRequest, Integer productId, Integer status) {
-//        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
-//        if (StringUtils.isEmpty(loginToken)) {
-//            return ServerResponse.createByErrorByMessage("用户未登录，无法获取当前用户信息");
-//        }
-//        String userJsonStr = RedisShardedPoolUtil.get(loginToken);
-//        User user = JsonUtil.stringToObj(userJsonStr, User.class);
-//        if (user == null) {
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
-//        }
-//        if (iUserService.checkAdminRole(user).isSuccess()) {
-//            //设置商品状态
-//            return iProductService.setSaleStatus(productId, status);
-//
-//        } else {
-//            return ServerResponse.createByErrorByMessage("无权限操作");
-//        }
         return iProductService.setSaleStatus(productId, status);
 
     }
@@ -95,21 +63,6 @@ public class ProductManageController {
     @RequestMapping("detail.do")
     @ResponseBody
     public ServerResponse<ProductDetailVo> getDetail(HttpServletRequest httpServletRequest, Integer productId) {
-//        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
-//        if (StringUtils.isEmpty(loginToken)) {
-//            return ServerResponse.createByErrorByMessage("用户未登录，无法获取当前用户信息");
-//        }
-//        String userJsonStr = RedisShardedPoolUtil.get(loginToken);
-//        User user = JsonUtil.stringToObj(userJsonStr, User.class);
-//        if (user == null) {
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
-//        }
-//        if (iUserService.checkAdminRole(user).isSuccess()) {
-//            //设置商品状态
-//            return iProductService.manageProductDetail(productId);
-//        } else {
-//            return ServerResponse.createByErrorByMessage("无权限操作");
-//        }
         return iProductService.manageProductDetail(productId);
 
     }
@@ -117,28 +70,12 @@ public class ProductManageController {
 
     /**
      * 获取
-     *
      * @param pageNum  页号
      * @param pageSize 页面条数
      */
     @RequestMapping("list.do")
     @ResponseBody
     public ServerResponse getList(HttpServletRequest httpServletRequest, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-//        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
-//        if (StringUtils.isEmpty(loginToken)) {
-//            return ServerResponse.createByErrorByMessage("用户未登录，无法获取当前用户信息");
-//        }
-//        String userJsonStr = RedisShardedPoolUtil.get(loginToken);
-//        User user = JsonUtil.stringToObj(userJsonStr, User.class);
-//        if (user == null) {
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
-//        }
-//        if (iUserService.checkAdminRole(user).isSuccess()) {
-//            //设置商品状态
-//            return iProductService.getProductList(pageNum, pageSize);
-//        } else {
-//            return ServerResponse.createByErrorByMessage("无权限操作");
-//        }
         return iProductService.getProductList(pageNum, pageSize);
 
     }
@@ -146,21 +83,6 @@ public class ProductManageController {
     @RequestMapping("search.do")
     @ResponseBody
     public ServerResponse productSearch(HttpServletRequest httpServletRequest, String productName, Integer productId, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-//        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
-//        if (StringUtils.isEmpty(loginToken)) {
-//            return ServerResponse.createByErrorByMessage("用户未登录，无法获取当前用户信息");
-//        }
-//        String userJsonStr = RedisShardedPoolUtil.get(loginToken);
-//        User user = JsonUtil.stringToObj(userJsonStr, User.class);
-//        if (user == null) {
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
-//        }
-//        if (iUserService.checkAdminRole(user).isSuccess()) {
-//            //设置商品状态
-//            return iProductService.searchProduct(productName, productId, pageNum, pageSize);
-//        } else {
-//            return ServerResponse.createByErrorByMessage("无权限操作");
-//        }
         return iProductService.searchProduct(productName, productId, pageNum, pageSize);
     }
 

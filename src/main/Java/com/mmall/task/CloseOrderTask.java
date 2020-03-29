@@ -114,6 +114,7 @@ public class CloseOrderTask {
     }
 
     private void closeOrder(String lockName) {
+        // 若此时故障，未能锁延时。
         RedisShardedPoolUtil.expire(lockName, 30);//有效期为30秒，防止死锁；但要确保其他服务器均已经放弃锁的获取，否则该方法会再次执行；
         log.info("获取{},ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread());
         int hour = Integer.parseInt(PropertiesUtil.getProperty("close.order.task.time.hour", "2"));

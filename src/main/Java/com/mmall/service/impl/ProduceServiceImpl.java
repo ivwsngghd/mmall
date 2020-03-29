@@ -149,10 +149,10 @@ public class ProduceServiceImpl implements IProductService {
     }
 
     public ServerResponse<PageInfo> searchProduct(String productName, Integer productId, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
         if (StringUtils.isNotBlank(productName)) {
-            productName = new StringBuilder().append("%").append(productName).append("%").toString();
+            productName = "%" + productName + "%";
         }
+        PageHelper.startPage(pageNum, pageSize);    //需要查询消耗掉 为减少异常消耗占用，必须紧接着查询语句；
         List<Product> productList = productMapper.selectByNameAndProductId(productName, productId);
         List<ProductListVo> productListVoList = Lists.newArrayList();   // new ArrayList<>();
         for (Product productItem : productList) {

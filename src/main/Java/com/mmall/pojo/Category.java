@@ -84,7 +84,7 @@ public class Category {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;             //地址一样，则必定为同一个对象；
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) return false;  // 是否同一个类
 
         Category category = (Category) o;
 

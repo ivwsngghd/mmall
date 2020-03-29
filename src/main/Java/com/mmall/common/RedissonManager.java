@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 
 @Component
 @Slf4j
+@Deprecated
 public class RedissonManager {
     private Config config = new Config();
     private Redisson redisson = null;

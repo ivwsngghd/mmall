@@ -11,7 +11,6 @@ import org.codehaus.jackson.type.TypeReference;
 
 import java.text.SimpleDateFormat;
 
-
 /**
  * 复用性极强
  * 注意简单的转换有限，如果将已经序列化为字符串的实例对象链表，再反序列化为类链表，则该链表里的类只是一个LinkedHashMap对象,而不是具体的类；

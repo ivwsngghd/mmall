@@ -10,7 +10,6 @@ public class Const {
     public final static String USERNAME = "username";
     public static final String TOKEN_PREFIX = "token_";     //用于找回密码答案的cookie前缀，存活12小时
 
-
     public interface  RedisCacheExtime{
         int REDIS_SESSION_EXTIME = 60 * 30; //session存活时间为30分钟
     }

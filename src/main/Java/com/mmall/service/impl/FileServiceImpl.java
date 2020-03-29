@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @Service("fileService")
@@ -59,6 +60,22 @@ public class FileServiceImpl implements IFileService {
 
         return targetFile.getName();
     }
+
+    @Override
+    public void delFile(String[] fileNames) {
+        FTPUtil.deleteImgFiles(fileNames);
+    }
+
+    @Override
+    public void delFile(String fileNames) {
+        FTPUtil.deleteImgFiles(new String[]{fileNames});
+    }
+
+    @Override
+    public void delFile(String[] fileNames, String remotePath) {
+        FTPUtil.deleteImgFiles(fileNames, remotePath);
+    }
+
 
     public static void main(String[] args) {
         String fileName = "abc.jpg";

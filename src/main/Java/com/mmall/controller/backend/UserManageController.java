@@ -33,7 +33,7 @@ public class UserManageController {
             if (user.getRole() == Const.Role.ROLE_ADMIN) {
                 //说明登陆的是管理员
                 String identifyCookie = UUID.randomUUID().toString();
-                CookieUtil.manageWriteLoginToken(httpServletResponse, identifyCookie);   //如果不想和protal共用，可以自己写一个cookiename；可以使用UUID，(越权问题已经通过拦截器解决)
+                CookieUtil.writeLoginToken(httpServletResponse, identifyCookie,Const.Role.ROLE_ADMIN);   //如果不想和protal共用，可以自己写一个cookiename；可以使用UUID，(越权问题已经通过拦截器解决)
                 RedisShardedPoolUtil.setEx(identifyCookie, JsonUtil.objToString(response.getData()), Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
                 return response;
             } else {

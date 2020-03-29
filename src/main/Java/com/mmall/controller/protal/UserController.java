@@ -42,20 +42,17 @@ public class UserController {
 
     @RequestMapping(value = "logout.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,@RequestParam("status") String status) {
-        String loginToken;
+    public ServerResponse<String> logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestParam("status") String status) {
+        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
 
         //把后台登出和前台登出分离
-        if (StringUtils.equals("admin",status)) {
-            loginToken = CookieUtil.readLoginToken(httpServletRequest,1);
-            CookieUtil.manageDelLoginToken(httpServletRequest, httpServletResponse);
-        } else {
-            loginToken = CookieUtil.readLoginToken(httpServletRequest);
-            CookieUtil.delLoginToken(httpServletRequest, httpServletResponse);
+        if (StringUtils.isNotBlank(status)) {
+            Integer role = StringUtils.equals("1", status) ? Const.Role.ROLE_ADMIN : Const.Role.ROLE_CUSTOMER;
+            loginToken = CookieUtil.readLoginToken(httpServletRequest, role);
+            CookieUtil.delLoginToken(httpServletRequest, httpServletResponse, role);
         }
 
         RedisShardedPoolUtil.del(loginToken);
-
         return ServerResponse.createBySuccess();
     }
 
@@ -72,6 +69,11 @@ public class UserController {
         return iUserService.checkValid(str, type);
     }
 
+    /**
+     * 用于检查登录状态
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping(value = "get_user_info.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> get_user_info(HttpServletRequest httpServletRequest) {
@@ -84,7 +86,7 @@ public class UserController {
         if (user != null) {
             return ServerResponse.createBySuccess(user);
         }
-        return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        return ServerResponse.createByErrorByMessage(ResponseCode.NEED_LOGIN.getDesc());
     }
 
 
@@ -156,7 +158,8 @@ public class UserController {
     public ServerResponse<User> get_information(HttpServletRequest httpServletRequest) {
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);
         if (StringUtils.isEmpty(loginToken)) {
-            return ServerResponse.createByErrorByMessage("用户未登录,无法获取当前用户的信息");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,需要强制登录status=10");
+//            return ServerResponse.createByErrorByMessage("用户未登录,无法获取当前用户的信息,请先登录！");
         }
         String userJsonStr = RedisShardedPoolUtil.get(loginToken);
         User user = JsonUtil.stringToObj(userJsonStr, User.class);

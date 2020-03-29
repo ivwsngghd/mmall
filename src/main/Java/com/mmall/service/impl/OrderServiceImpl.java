@@ -208,7 +208,10 @@ public class OrderServiceImpl implements IOrderService {
         return null;
     }
 
-
+    /**
+     * 生成订单号
+     * 订单号 = 系统时间 + 100以内的随机数
+     */
     private long generateOrderNo() {
         long currentTime = System.currentTimeMillis();
         return currentTime + new Random().nextInt(100);

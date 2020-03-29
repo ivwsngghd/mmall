@@ -1,6 +1,7 @@
 package com.mmall.util;
 
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +46,7 @@ public class FTPUtil {
     public static boolean uploadFile(List<File> fileList) throws IOException {
         FTPUtil ftpUtil = new FTPUtil(ftpIp, 21, ftpUser, ftpPass);
         logger.info("开始连接ftp服务器");
-        //根目录相对路径
+        //TODO 独立上传的路径目录
         boolean result = ftpUtil.uploadFile("img", fileList);
         logger.info("开始连接ftp服务器，结束上传，上传结果:{}", result);
 
@@ -53,8 +54,8 @@ public class FTPUtil {
     }
 
     /**
-     *  分布式图片存储改良的上传方法：
-     *  即上层指定了ftp的IP，用户，服务器，密码，和存储的相对路径
+     * 分布式图片存储改良的上传方法：
+     * 即上层指定了ftp的IP，用户，服务器，密码，和存储的相对路径
      */
     public static boolean uploadFile(List<File> fileList, String ftpIp, String ftpUser, String ftpPass, String remotePath) throws IOException {
         FTPUtil ftpUtil = new FTPUtil(ftpIp, 21, ftpUser, ftpPass);
@@ -115,7 +116,7 @@ public class FTPUtil {
         boolean success = false;
         ftpClient = new FTPClient();
         try {
-            ftpClient.connect(ip);
+            ftpClient.connect(ip, port); //port 可不写，不写默认21
             ftpClient.login(user, pwd);
             success = true;
         } catch (IOException e) {
@@ -123,6 +124,68 @@ public class FTPUtil {
         }
         return success;
     }
+
+    /**
+     * 用于查询有的文件数
+     *
+     * @param remotePath 要查询的远程目录文件夹
+     * @return
+     */
+    public static String[] imgPathSelect(String remotePath) {
+        FTPUtil ftpUtil = new FTPUtil(ftpIp, 21, ftpUser, ftpPass);
+
+        try {
+            return ftpUtil.imgSelect(remotePath);
+        } catch (IOException e) {
+            logger.info("ftp连接异常:{}", e);
+        }
+        return null;
+
+    }
+
+    private String[] imgSelect(String remotePath) throws IOException {
+        logger.info("开始连接ftp服务器");
+        if (connectServer(ftpIp, this.port, ftpUser, ftpPass)) {
+            try {
+                logger.info("开始查询img路径下的文件");
+                ftpClient.enterLocalPassiveMode();
+                return ftpClient.listNames(remotePath);
+            } catch (IOException e) {
+                logger.info("图片文件查询异常");
+            } finally {
+                ftpClient.disconnect();
+            }
+        }
+        return null;
+    }
+
+    public static void deleteImgFiles(String[] imgNames) {
+        deleteImgFiles(imgNames,"img");
+    }
+
+    public static void deleteImgFiles(String[] imgNames,String remotePath) {
+        FTPUtil ftpUtil = new FTPUtil(ftpIp, 21, ftpUser, ftpPass);
+        ftpUtil.connectServer(ftpUtil.getIp(), ftpUtil.getPort(), ftpUtil.getUser(), ftpUtil.getPwd());
+        FTPClient ftpClient = ftpUtil.getFtpClient();
+        try {
+            logger.info("开始连接ftp服务器，进行图片清除操作");
+            ftpClient.enterLocalPassiveMode();
+            ftpClient.changeWorkingDirectory(remotePath);
+            for (String pathname : imgNames) {
+                ftpClient.deleteFile(pathname);
+            }
+            logger.info("图片清理工作完成");
+        } catch (IOException e) {
+            logger.info("图片文件查询异常");
+        } finally {
+            try {
+                ftpClient.disconnect();
+            } catch (IOException e) {
+                logger.info("ftpClient关闭时异常:{}", e);
+            }
+        }
+    }
+
 
     public String getIp() {
         return ip;

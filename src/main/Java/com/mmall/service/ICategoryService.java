@@ -24,7 +24,4 @@ public interface ICategoryService {
      */
     public ServerResponse<List<Integer>> selectCategoryAndChildrenById(Integer categoryId);
 
-
-
-
 }

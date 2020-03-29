@@ -57,7 +57,7 @@ public class AuthorityInterceptor implements HandlerInterceptor {
         }
         //成功获取了用户信息之后，使用RedisUtil工具进行权限登陆操作
         User user = null;
-        String loginToken = CookieUtil.manageReadLoginToken(httpServletRequest);
+        String loginToken = CookieUtil.readLoginToken(httpServletRequest,Const.Role.ROLE_ADMIN);
         if (StringUtils.isNotEmpty(loginToken)) {
             String userJsonStr = RedisShardedPoolUtil.get(loginToken);
             user = JsonUtil.stringToObj(userJsonStr, User.class);
@@ -94,17 +94,17 @@ public class AuthorityInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
-        log.info("postHandle");
+
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        log.info("afterCompletion");
+
     }
 
 }
 
 /*
  *   在JDK 8，interface的接口方法是可以添加default关键字，然后写方法体{}的；
- *   也就是这些方法可以默认default里面的方法，而不是必须实现；
+ *   也就是以上的这些方法可以默认default里面的方法，而不是必须实现；
  * */
