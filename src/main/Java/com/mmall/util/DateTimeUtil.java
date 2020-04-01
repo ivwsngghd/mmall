@@ -12,8 +12,8 @@ public class DateTimeUtil {
     //joda-time 开源包 开源包
 
     //str <-----> Date
-    public static final String STANDARD_FORMAT = "yyyy-MM-dd HH:mm:ss";
     //这个日期的格式写错会导致数据转换失败，不会报错，也不会异常，会直接阻塞卡死在数据库插入；
+    public static final String STANDARD_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     /**
      *  字符串转换dateTime

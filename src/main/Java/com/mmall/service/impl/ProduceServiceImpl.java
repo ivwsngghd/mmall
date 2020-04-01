@@ -13,7 +13,9 @@ import com.mmall.pojo.Product;
 import com.mmall.service.ICategoryService;
 import com.mmall.service.IProductService;
 import com.mmall.util.DateTimeUtil;
+import com.mmall.util.JsonUtil;
 import com.mmall.util.PropertiesUtil;
+import com.mmall.util.RedisShardedPoolUtil;
 import com.mmall.vo.ProductDetailVo;
 import com.mmall.vo.ProductListVo;
 import org.apache.commons.lang3.StringUtils;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service("iProductService")
 public class ProduceServiceImpl implements IProductService {
@@ -202,25 +205,31 @@ public class ProduceServiceImpl implements IProductService {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
 
+        if (Const.INDEX_CACHE_KEYWORDS.ICKEYWORDS.contains(keyword)) {
+            String productListStr = RedisShardedPoolUtil.get(Const.INDEX_CACHE_KEYWORDS.KEYWORDS_CACHE + keyword);
+            if (StringUtils.isNotBlank(productListStr)) {
+                List<ProductListVo> productListVo = JsonUtil.stringToObj(productListStr, List.class);
+                PageInfo pageInfo = new PageInfo(productListVo);
+                return ServerResponse.createBySuccess(pageInfo);
+            }
+        }
+
 
         List<Integer> categoryIdList = new ArrayList<>();   //调用递归方法用于获取该分类的所有子分类
         if (categoryId != null) {
             Category category = categoryMapper.selectByPrimaryKey(categoryId);
             if (category == null && StringUtils.isBlank(keyword)) {
                 //没有该分类，且没有传入关键字，返回一个空的结果集，不报错；
-                PageHelper.startPage(pageNum, pageSize);
                 List<ProductListVo> productListVoList = Lists.newArrayList();
-                PageInfo pageInfo = new PageInfo(productListVoList);
-//                pageInfo.setList(productListVoList);
+                PageInfo pageInfo = new PageInfo();
+                pageInfo.setPageNum(0);
+                pageInfo.setPageSize(0);
                 return ServerResponse.createBySuccess(pageInfo);
             }
             categoryIdList = iCategoryService.selectCategoryAndChildrenById(categoryId).getData();
         }
 
         //查询不到该分类，但有关键字
-        if (StringUtils.isNotBlank(keyword)) {
-            keyword = new StringBuilder().append("%").append(keyword).append("%").toString();
-        }
         PageHelper.startPage(pageNum, pageSize);
         //排序处理
         if (StringUtils.isNotBlank(orderBy)) {
@@ -229,16 +238,21 @@ public class ProduceServiceImpl implements IProductService {
                 PageHelper.orderBy(orderByArray[0] + " " + orderByArray[1]);
             }
         }
-        List<Product> productList = productMapper.selectByNameAndCategoryIds((StringUtils.isBlank(keyword)?null:keyword),(categoryIdList.size()==0?null:categoryIdList));
+        List<Product> productList = productMapper.selectByNameAndCategoryIds((StringUtils.isBlank(keyword) ? null : "%" + keyword + "%"), (categoryIdList.size() == 0 ? null : categoryIdList));
 
         List<ProductListVo> productListVoList = Lists.newArrayList();
-        for (Product product: productList){
+        for (Product product : productList) {
             ProductListVo productListVo = assembleProductListVo(product);
             productListVoList.add(productListVo);
         }
 
-        PageInfo pageInfo = new PageInfo(productList);
-        pageInfo.setList(productListVoList);
+        //判断如果是首页的缓存关键词，则缓存下来
+        if (Const.INDEX_CACHE_KEYWORDS.ICKEYWORDS.contains(keyword)) {
+            RedisShardedPoolUtil.setEx(Const.INDEX_CACHE_KEYWORDS.KEYWORDS_CACHE + keyword, JsonUtil.objToString(productListVoList), new Random().nextInt(6000) + 6000);
+        }
+
+        PageInfo pageInfo = new PageInfo(productListVoList);
+//        pageInfo.setList(productListVoList);
 
         return ServerResponse.createBySuccess(pageInfo);
     }

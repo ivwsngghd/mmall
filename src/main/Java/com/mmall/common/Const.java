@@ -1,7 +1,11 @@
 package com.mmall.common;
 
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class Const {
@@ -156,6 +160,12 @@ public class Const {
 
     public interface REDIS_LOCK{
         String CLOSE_ORDER_TASK_LOCK = "CLOSE_ORDER_TASK_LOCK"; //关闭订单的分布式锁
+    }
+
+    public interface INDEX_CACHE_KEYWORDS{
+        String KEYWORDS_CACHE = "KEYWORDS_CACHE:";
+        Set<String> ICKEYWORDS = Sets.newHashSet("手机","数码","电脑","办公配件","电视","空调","冰箱","洗衣机","厨卫家电","小家电","家具","家装","护肤化妆","清洁用品","纸品","母婴用品","儿童玩具","童装童鞋","鞋靴","箱包","钟表","珠宝","图书","音像","电子书","挂饰");
+
     }
 
 }
