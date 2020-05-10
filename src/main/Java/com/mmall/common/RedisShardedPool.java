@@ -1,10 +1,12 @@
 package com.mmall.common;
 
 import com.mmall.util.PropertiesUtil;
+import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.*;
 import redis.clients.util.Hashing;
 import redis.clients.util.Sharded;
 
+import javax.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import java.util.List;
  * 碎片化RedisPool
  * 即配置针对多个RedisServer的连接工具,可把多个Redis节点合为一个使用；
  */
+@Slf4j
 public class RedisShardedPool {
     private static ShardedJedisPool pool = null;  //Jedis连接池
     private static Integer maxTotal = Integer.parseInt(PropertiesUtil.getProperty("redis.max.total", "20")); //最大连接数
@@ -73,9 +76,19 @@ public class RedisShardedPool {
         }
     }
 
+    //增加该注释，在正常关闭程序的时候，顺便销毁池子，成功删除线程
+    @PreDestroy
+    private static void poolDestroy(){
+        try {
+            pool.destroy();
+        }catch (Exception e){
+            log.info("Redis池子关闭异常:{}",e);
+        }
+    }
+
+
     public static void main(String args[]){
         ShardedJedis jedis = pool.getResource();   //从打开的连接池中获取可用的连接
-
         for (int i = 0; i < 10; i++) {
             jedis.set("key"+i,"value"+i);
         }

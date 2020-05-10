@@ -166,7 +166,6 @@ public class ProduceServiceImpl implements IProductService {
         PageInfo pageResult = new PageInfo(productList);
         pageResult.setList(productListVoList);
         return ServerResponse.createBySuccess(pageResult);
-
     }
 
     private ProductListVo assembleProductListVo(Product product) {
@@ -205,6 +204,7 @@ public class ProduceServiceImpl implements IProductService {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
 
+        //判断是否高频访问词，如果是则从Redis中获取
         if (Const.INDEX_CACHE_KEYWORDS.ICKEYWORDS.contains(keyword)) {
             String productListStr = RedisShardedPoolUtil.get(Const.INDEX_CACHE_KEYWORDS.KEYWORDS_CACHE + keyword);
             if (StringUtils.isNotBlank(productListStr)) {
@@ -252,8 +252,6 @@ public class ProduceServiceImpl implements IProductService {
         }
 
         PageInfo pageInfo = new PageInfo(productListVoList);
-//        pageInfo.setList(productListVoList);
-
         return ServerResponse.createBySuccess(pageInfo);
     }
 

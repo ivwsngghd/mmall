@@ -3,12 +3,11 @@ package com.mmall.common;
 import com.mmall.util.PropertiesUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.Redisson;
-import org.redisson.config.ClusterServersConfig;
 import org.redisson.config.Config;
-import org.redisson.config.SingleServerConfig;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 @Component
 @Slf4j
@@ -39,4 +38,10 @@ public class RedissonManager {
             log.error("redisson init error:",e);
         }
     }
+
+    @PreDestroy
+    private void destroy(){
+        redisson.shutdown();
+    }
+
 }

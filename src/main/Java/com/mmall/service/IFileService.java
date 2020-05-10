@@ -11,4 +11,6 @@ public interface IFileService {
     void delFile(String fileNames);
     void delFile(String []fileNames,String remotePath);
 
+
+
 }

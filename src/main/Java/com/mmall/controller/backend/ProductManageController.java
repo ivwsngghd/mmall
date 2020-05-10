@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/manage/product")
@@ -49,14 +50,12 @@ public class ProductManageController {
     @ResponseBody
     public ServerResponse productSave(HttpServletRequest httpServletRequest, Product product) {
         return iProductService.saveOrUpdateProduct(product);
-
     }
 
     @RequestMapping("set_sale_status.do")
     @ResponseBody
     public ServerResponse set_sales_status(HttpServletRequest httpServletRequest, Integer productId, Integer status) {
         return iProductService.setSaleStatus(productId, status);
-
     }
 
 
@@ -113,7 +112,7 @@ public class ProductManageController {
     @ResponseBody
     public Map richtextImgUpload(HttpServletRequest httpServletRequest, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> resultMap = Maps.newHashMap();
-        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
+        String loginToken = CookieUtil.readLoginToken(httpServletRequest,Const.Role.ROLE_ADMIN);
         String userJsonStr = RedisShardedPoolUtil.get(loginToken);
         if (StringUtils.isEmpty(loginToken) || StringUtils.isEmpty(userJsonStr)) {
             resultMap.put("success", false);

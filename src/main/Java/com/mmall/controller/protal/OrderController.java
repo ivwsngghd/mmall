@@ -40,7 +40,6 @@ public class OrderController {
     @Autowired
     private IOrderService iOrderService;
 
-
     @RequestMapping("create.do")
     @ResponseBody
     public ServerResponse create(HttpServletRequest httpServletRequest, Integer shippingId){

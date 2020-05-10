@@ -89,29 +89,29 @@ public class CloseOrderTask {
     }
 
 //    @Scheduled(cron = "0 */1 * * * ?")
-    public void closeOrderTaskV4(){
-        RLock lock = redissonManager.getRedisson().getLock(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
-
-        boolean getLock = false;
-        try {
-            if (getLock = lock.tryLock(0,5, TimeUnit.SECONDS)){
-                log.info("Redisson获取分布式锁:{},ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
-                Thread.sleep(1000);
-                int hour = Integer.parseInt(PropertiesUtil.getProperty("close.order.task.time.hour","1"));
-//                iOrderService.closeOrder(hour);
-            }else {
-                log.info("Redisson没有获取到分布式锁:{},ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
-            }
-        } catch (InterruptedException e) {
-            log.error("Redisson分布式锁获取异常",e);
-        }finally {
-            if (!getLock){
-                return;
-            }
-            lock.unlock();
-            log.info("Redisson分布式锁释放锁");
-        }
-    }
+//    public void closeOrderTaskV4(){
+//        RLock lock = redissonManager.getRedisson().getLock(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
+//
+//        boolean getLock = false;
+//        try {
+//            if (getLock = lock.tryLock(0,5, TimeUnit.SECONDS)){
+//                log.info("Redisson获取分布式锁:{},ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
+//                Thread.sleep(1000);
+//                int hour = Integer.parseInt(PropertiesUtil.getProperty("close.order.task.time.hour","1"));
+////                iOrderService.closeOrder(hour);
+//            }else {
+//                log.info("Redisson没有获取到分布式锁:{},ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
+//            }
+//        } catch (InterruptedException e) {
+//            log.error("Redisson分布式锁获取异常",e);
+//        }finally {
+//            if (!getLock){
+//                return;
+//            }
+//            lock.unlock();
+//            log.info("Redisson分布式锁释放锁");
+//        }
+//    }
 
     private void closeOrder(String lockName) {
         // 若此时故障，未能锁延时。

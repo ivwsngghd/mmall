@@ -76,7 +76,6 @@ public class FileServiceImpl implements IFileService {
         FTPUtil.deleteImgFiles(fileNames, remotePath);
     }
 
-
     public static void main(String[] args) {
         String fileName = "abc.jpg";
         System.out.println(fileName.substring(fileName.lastIndexOf('.')));
