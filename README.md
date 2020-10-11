@@ -209,4 +209,6 @@ Controller -> VO(value object)
 - natapp外网穿透(即无需外网IP也可以获取支付宝回调)和Tomcat remote debug(tomcat远程debug)
 - 生成二维码，并持久化到图片服务器
 
+# 项目结构：
+![avatar](http://baidu.com/pic/doge.png)
 
