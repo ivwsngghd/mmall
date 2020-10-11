@@ -210,7 +210,3 @@ Controller -> VO(value object)
 - 生成二维码，并持久化到图片服务器
 
 
-### 接口设计文档
-
-> http://git.oschina.net/imooccode/happymmallwiki/wikis/home
-
