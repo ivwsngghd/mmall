@@ -210,5 +210,12 @@ Controller -> VO(value object)
 - 生成二维码，并持久化到图片服务器
 
 # 项目结构：
-![avatar](http://baidu.com/pic/doge.png)
 
+#### 总体结构
+![avatar](http://img.ivwsngghd.top/815517db-6534-49b5-8973-7fb3c1c4056b.png)
+
+#### redis分片和设置锁
+![avatar](http://img.ivwsngghd.top/d9935efa-db2d-40fa-8b18-5da7ce8fe45f.png)
+
+#### Tomcat服务器模块
+![avatar](http://img.ivwsngghd.top/9cb41a94-564b-40b5-88a5-2f9c13920192.png)
